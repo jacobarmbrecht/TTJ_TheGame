@@ -1,0 +1,87 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/CastleTile.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/PlatformTile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Mannequin.tscn" type="PackedScene" id=4]
+
+[node name="Main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+gravity = 1200
+
+[node name="CastleBricks" type="Node2D" parent="."]
+
+[node name="CastleBrick" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 32, 568 )
+
+[node name="CastleBrick2" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 96, 568 )
+
+[node name="CastleBrick3" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 160, 568 )
+
+[node name="CastleBrick4" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 224, 568 )
+
+[node name="CastleBrick5" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 288, 568 )
+
+[node name="CastleBrick6" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 352, 568 )
+
+[node name="CastleBrick7" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 416, 568 )
+
+[node name="CastleBrick8" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 480, 504 )
+
+[node name="CastleBrick9" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 480, 568 )
+
+[node name="CastleBrick10" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 544, 568 )
+
+[node name="CastleBrick11" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 608, 568 )
+
+[node name="CastleBrick12" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 672, 568 )
+
+[node name="CastleBrick13" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 736, 568 )
+
+[node name="CastleBrick14" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 800, 568 )
+
+[node name="CastleBrick15" parent="CastleBricks" instance=ExtResource( 1 )]
+position = Vector2( 864, 568 )
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="PlatformTile" parent="Platforms" instance=ExtResource( 3 )]
+position = Vector2( 576, 424 )
+
+[node name="PlatformTile2" parent="Platforms" instance=ExtResource( 3 )]
+position = Vector2( 608, 424 )
+
+[node name="PlatformTile3" parent="Platforms" instance=ExtResource( 3 )]
+position = Vector2( 640, 424 )
+
+[node name="PlatformTile4" parent="Platforms" instance=ExtResource( 3 )]
+position = Vector2( 672, 416 )
+
+[node name="PlatformTile5" parent="Platforms" instance=ExtResource( 3 )]
+position = Vector2( 704, 416 )
+
+[node name="PlatformTile6" parent="Platforms" instance=ExtResource( 3 )]
+position = Vector2( 432, 336 )
+
+[node name="PlatformTile7" parent="Platforms" instance=ExtResource( 3 )]
+position = Vector2( 400, 336 )
+
+[node name="PlatformTile8" parent="Platforms" instance=ExtResource( 3 )]
+position = Vector2( 368, 336 )
+
+[node name="Mannequin" parent="." instance=ExtResource( 4 )]
+position = Vector2( 560, 512 )
