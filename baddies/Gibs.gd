@@ -1,7 +1,7 @@
 extends Node2D
 
 func _ready():
-	yield(get_tree(), "physics_frame")
+	yield(get_tree().create_timer(0.1), "timeout")
 	explode()
 	yield(get_tree().create_timer(10.0), "timeout")
 	queue_free()
