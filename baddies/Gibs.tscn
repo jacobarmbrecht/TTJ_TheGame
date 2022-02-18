@@ -1,0 +1,126 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://art/sprites/enemies/mannequins/manne_gibbed.png" type="Texture" id=1]
+[ext_resource path="res://baddies/Gibs.gd" type="Script" id=2]
+
+[sub_resource type="PhysicsMaterial" id=4]
+bounce = 0.44
+
+[sub_resource type="CapsuleShape2D" id=1]
+height = 6.0
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 4.0
+height = 6.0
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 8.0
+height = 0.0
+
+[node name="Gibs" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Head" type="RigidBody2D" parent="."]
+position = Vector2( -1, -19 )
+collision_layer = 0
+collision_mask = 2
+mass = 0.08
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Head"]
+texture = ExtResource( 1 )
+hframes = 6
+
+[node name="Torso" type="RigidBody2D" parent="."]
+position = Vector2( 2, -3 )
+collision_layer = 0
+collision_mask = 2
+mass = 0.08
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Torso"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Torso"]
+texture = ExtResource( 1 )
+hframes = 6
+frame = 5
+
+[node name="LArm" type="RigidBody2D" parent="."]
+position = Vector2( -9, -2 )
+collision_layer = 0
+collision_mask = 2
+mass = 0.08
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LArm"]
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="LArm"]
+texture = ExtResource( 1 )
+hframes = 6
+frame = 1
+
+[node name="RArm" type="RigidBody2D" parent="."]
+position = Vector2( 6, -3 )
+collision_layer = 0
+collision_mask = 2
+mass = 0.08
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RArm"]
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="RArm"]
+texture = ExtResource( 1 )
+hframes = 6
+frame = 4
+
+[node name="LLeg" type="RigidBody2D" parent="."]
+position = Vector2( -7, 10 )
+collision_layer = 0
+collision_mask = 2
+mass = 0.08
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LLeg"]
+position = Vector2( 1, -1 )
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="LLeg"]
+texture = ExtResource( 1 )
+hframes = 6
+frame = 2
+
+[node name="RLeg" type="RigidBody2D" parent="."]
+position = Vector2( 1, 9 )
+collision_layer = 0
+collision_mask = 2
+mass = 0.08
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RLeg"]
+position = Vector2( 1, -1 )
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="RLeg"]
+texture = ExtResource( 1 )
+hframes = 6
+frame = 3
+
+[node name="Explosion" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[node name="Cleanup" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Explosion" to="." method="explode"]
+[connection signal="timeout" from="Cleanup" to="." method="queue_free"]
