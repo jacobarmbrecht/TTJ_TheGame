@@ -63,6 +63,13 @@ taunt={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="default"
+2d_physics/layer_2="floor"
+2d_physics/layer_3="player"
+2d_physics/layer_4="baddies"
+
 [physics]
 
 common/enable_pause_aware_picking=true
@@ -70,4 +77,5 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 quality/driver/driver_name="GLES2"
+quality/intended_usage/framebuffer_allocation=0
 environment/default_environment="res://default_env.tres"

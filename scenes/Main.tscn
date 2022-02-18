@@ -4,16 +4,13 @@
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/PlatformTile.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/Mannequin.tscn" type="PackedScene" id=4]
-
-[sub_resource type="NavigationPolygon" id=1]
-vertices = PoolVector2Array( 64, 0, 0, 0, 0, 0, 64, 0 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+[ext_resource path="res://baddies/Mannequin.tscn" type="PackedScene" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 
 [sub_resource type="TileSet" id=3]
-0/name = "castlebrick64.png 0"
+0/name = "Brick Floor"
 0/texture = ExtResource( 1 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
@@ -21,7 +18,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 0/tile_mode = 0
 0/occluder_offset = Vector2( 0, 0 )
 0/navigation_offset = Vector2( 0, 0 )
-0/navigation = SubResource( 1 )
 0/shape_offset = Vector2( 0, 0 )
 0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 0/shape = SubResource( 2 )
@@ -70,8 +66,15 @@ position = Vector2( 368, 336 )
 [node name="Mannequin" parent="." instance=ExtResource( 4 )]
 position = Vector2( 560, 512 )
 
-[node name="Floor" type="TileMap" parent="."]
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="Floor" type="TileMap" parent="Navigation2D"]
 position = Vector2( 0, 24 )
 tile_set = SubResource( 3 )
+collision_layer = 2
+collision_mask = 0
 format = 1
 tile_data = PoolIntArray( 458759, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0 )
+
+[node name="Mannequin2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 729, 490 )
