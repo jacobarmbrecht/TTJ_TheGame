@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/manne_basic.png-e7c879d41df99bb699ff40ee0cbf3660.stex"
+path="res://.import/castlebrick64.png-5546d9e84b47c26196defe3c407f87ab.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/sprites/enemies/mannequins/manne_basic.png"
-dest_files=[ "res://.import/manne_basic.png-e7c879d41df99bb699ff40ee0cbf3660.stex" ]
+source_file="res://art/images/castlebrick64.png"
+dest_files=[ "res://.import/castlebrick64.png-5546d9e84b47c26196defe3c407f87ab.stex" ]
 
 [params]
 
