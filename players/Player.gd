@@ -18,7 +18,7 @@ func _physics_process(delta):
 	var move_vec = Vector2.ZERO
 	move_vec.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	move_vec.x *= 100.0
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		move_vec += Vector2.UP * 150
 	move_vec += Vector2.DOWN * 98 * delta
 	velocity = move_and_slide(move_vec + velocity, Vector2.UP)
