@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
 signal hit
-
+onready var anim_tree = $AnimationPlayer/AnimationTree
 
 export var speed : int = 100 #player speed
-export var jumpForce : int = 600
+export var jumpForce : int = 500
 export var gravity : int = 800
 var velocity : Vector2 = Vector2()  # The player's movement vector.
 var screen_size #size of window
@@ -59,23 +59,20 @@ func _physics_process(delta):
 		
 		#choose movement anim
 		if velocity.x != 0:
-			start_walk()
 			$AnimatedSprite.animation = "walk"
 			$AnimatedSprite.flip_h = velocity.x < 0
 		else: #set the default as idle
-			end_walk()
 			$AnimatedSprite.animation = "idle"
 	
 		if attack_pressed and attack_rate_done:
-			end_walk()
 			$AnimatedSprite.animation = "attack"
-			$AnimatedSprite.offset = Vector2(0,-21) #offset to deal with difference in frame size (look into using animation player instead of animated sprite)
+			do_attack();
+			#$AnimatedSprite.offset = Vector2(0,-21) #offset to deal with difference in frame size (look into using animation player instead of animated sprite)
 			is_attacking = true
 			$AttackTimer.start()
 			attack_rate_done = false
 			$AttackRate.start()
 		elif special_pressed and attack_rate_done:
-			end_walk()
 			$AnimatedSprite.animation = "special"
 			#$AnimatedSprite.offset = Vector2(-15,-9)
 			is_attacking = true
@@ -83,7 +80,6 @@ func _physics_process(delta):
 			attack_rate_done = false
 			$AttackRate.start()
 		elif taunt_pressed and attack_rate_done:
-			end_walk()
 			$AnimatedSprite.animation = "taunt"
 			is_attacking = true
 			$TauntTimer.start()
@@ -96,28 +92,31 @@ func _physics_process(delta):
 	velocity.y += gravity*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
-func start_walk():
-	$WalkCollision.show()
-	$IdleCollision.hide()
 
-func end_walk():
-	$WalkCollision.hide()
-	$IdleCollision.show()
+#danes animation tree do_attack
+func do_attack():
+	anim_tree["parameters/Attack/active"] = 1
 
+
+#timer destination for ending the attack animations
 func end_attack():
-	$AnimatedSprite.offset = Vector2(0,0)
+	#$AnimatedSprite.offset = Vector2(0,0)
 	$AnimatedSprite.animation = "idle"
 	is_attacking = false
 
+#just measures overall attack rate
 func attack_rate_timeout():
 	attack_rate_done = true
 
 func start(pos):
 	position = pos
 	show()
-	$CollisionShape2D.disabled = false
 
 func _on_Player_body_entered(body):
-	hide()
 	emit_signal("hit")
-	$WalkCollision.set_deferred("disabled", true)
+
+func attack_damage():
+	var baddie = $Sprite/Attacks/Guitar.get_collider()
+	if baddie and baddie.has_method("die"):
+		baddie.call_deferred("die")
+
