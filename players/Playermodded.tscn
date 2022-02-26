@@ -1,7 +1,6 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
-[ext_resource path="res://art/spritesheets/benj_resized.png" type="Texture" id=2]
 [ext_resource path="res://art/sprites/benj/benj_special2.png" type="Texture" id=3]
 [ext_resource path="res://art/sprites/benj/benj_walk2.png" type="Texture" id=4]
 [ext_resource path="res://art/sprites/benj/benj_idle1.png" type="Texture" id=5]
@@ -52,7 +51,7 @@ fadein_time = 0.0
 fadeout_time = 0.0
 
 [sub_resource type="AnimationNodeBlendTree" id=8]
-graph_offset = Vector2( -588.934, 131 )
+graph_offset = Vector2( -390, 69 )
 nodes/Animation/node = SubResource( 6 )
 nodes/Animation/position = Vector2( -100, 120 )
 "nodes/Animation 2/node" = SubResource( 5 )
@@ -82,7 +81,7 @@ animations = [ {
 "frames": [ ExtResource( 12 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "attack",
-"speed": 2.0
+"speed": 1.5
 }, {
 "frames": [ ExtResource( 9 ), ExtResource( 4 ), ExtResource( 10 ), ExtResource( 4 ) ],
 "loop": true,
@@ -113,35 +112,19 @@ parameters/Attack/active = false
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 9 )
-animation = "attack"
+animation = "idle"
+frame = 1
 playing = true
 
-[node name="Sprite" type="Sprite" parent="."]
-visible = false
-texture = ExtResource( 2 )
-offset = Vector2( 17.414, 0 )
-hframes = 4
-vframes = 3
-
-[node name="Attacks" type="Node2D" parent="Sprite"]
-
-[node name="Guitar" type="RayCast2D" parent="Sprite/Attacks"]
-enabled = true
-cast_to = Vector2( 30, 0 )
-collision_mask = 8
-
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 2.0
 
 [node name="SpecialTimer" type="Timer" parent="."]
 wait_time = 2.5
 one_shot = true
 
 [node name="TauntTimer" type="Timer" parent="."]
-wait_time = 2.0
 
 [node name="AttackRate" type="Timer" parent="."]
-wait_time = 2.5
 
 [connection signal="timeout" from="AttackTimer" to="." method="end_attack"]
 [connection signal="timeout" from="SpecialTimer" to="." method="end_attack"]
