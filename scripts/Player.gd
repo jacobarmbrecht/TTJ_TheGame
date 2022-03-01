@@ -59,6 +59,7 @@ func _physics_process(delta):
 		if velocity.x != 0:
 			$AnimatedSprite.animation = "walk"
 			$AnimatedSprite.flip_h = velocity.x < 0
+			$Sprite.scale.x = 1 if velocity.x > 0 else -1 ## Must also turn sprite for correct attack vectors
 		else: #set the default as idle
 			$AnimatedSprite.animation = "idle"
 
