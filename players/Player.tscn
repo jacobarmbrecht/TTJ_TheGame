@@ -18,7 +18,7 @@
 extents = Vector2( 11.5, 21.5771 )
 
 [sub_resource type="Animation" id=2]
-length = 0.3
+length = 1.014
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -26,20 +26,57 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.2 ),
+"times": PoolRealArray( 0.5 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
 "method": "attack_damage"
 } ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 9, 8, 0 ]
+}
 
 [sub_resource type="Animation" id=3]
-length = 0.6
+length = 2.66
 loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.33 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
 
 [sub_resource type="Animation" id=4]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
 
 [sub_resource type="AnimationNodeAnimation" id=5]
 animation = "Attack"
@@ -52,11 +89,11 @@ fadein_time = 0.0
 fadeout_time = 0.0
 
 [sub_resource type="AnimationNodeBlendTree" id=8]
-graph_offset = Vector2( -588.934, 131 )
+graph_offset = Vector2( -492.944, 34.875 )
 nodes/Animation/node = SubResource( 6 )
-nodes/Animation/position = Vector2( -100, 120 )
+nodes/Animation/position = Vector2( -120, 100 )
 "nodes/Animation 2/node" = SubResource( 5 )
-"nodes/Animation 2/position" = Vector2( -160, 240 )
+"nodes/Animation 2/position" = Vector2( -160, 200 )
 nodes/Attack/node = SubResource( 7 )
 nodes/Attack/position = Vector2( 120, 100 )
 nodes/output/position = Vector2( 380, 100 )
@@ -112,12 +149,14 @@ active = true
 parameters/Attack/active = false
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+visible = false
 frames = SubResource( 9 )
 animation = "attack"
+frame = 1
 playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
-visible = false
+position = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 offset = Vector2( 17.414, 0 )
 hframes = 4
@@ -131,7 +170,6 @@ cast_to = Vector2( 30, 0 )
 collision_mask = 8
 
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 2.0
 
 [node name="SpecialTimer" type="Timer" parent="."]
 wait_time = 2.5
