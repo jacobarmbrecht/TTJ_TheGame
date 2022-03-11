@@ -6,7 +6,7 @@ export (float) var SPEED = 0.5
 
 var movement = Vector2(100, 100)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if is_on_floor() and (not $FloorRay.is_colliding() or $WallRay.is_colliding()):
 		scale.x *= -1
 	var move_vec = transform.basis_xform(movement) ## Move relative to direction
