@@ -88,8 +88,3 @@ func attack_rate_timeout():
 func start(pos):
 	position = pos
 	show()
-
-func attack_damage():
-	var baddie = attacks.get_node("Guitar").get_collider()
-	if baddie and baddie.has_method("die"):
-		baddie.call_deferred("die")

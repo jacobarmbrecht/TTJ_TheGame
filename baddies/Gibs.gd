@@ -7,10 +7,9 @@ func _ready():
 	queue_free()
 
 func explode():
-	$CPUParticles2D.emitting = true
-	for child in get_children():
+	$Fire.emitting = true
+	for child in $Limbs.get_children():
 		var rot = rand_range(0, PI)
 		var force = Vector2.LEFT * 10
 		force = force.rotated(rot)
-		if child is RigidBody2D:
-			child.apply_impulse(child.position, force)
+		child.apply_impulse(child.position, force)

@@ -4,6 +4,15 @@
 [ext_resource path="res://baddies/Gibs.gd" type="Script" id=2]
 [ext_resource path="res://art/spritesheets/ARW_2D_Flame_Sprite_Sheet_.png" type="Texture" id=3]
 
+[sub_resource type="CanvasItemMaterial" id=5]
+particles_animation = true
+particles_anim_h_frames = 7
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
 [sub_resource type="PhysicsMaterial" id=4]
 bounce = 0.44
 
@@ -23,112 +32,10 @@ height = 6.0
 radius = 3.0
 height = 10.0
 
-[sub_resource type="CanvasItemMaterial" id=5]
-particles_animation = true
-particles_anim_h_frames = 7
-particles_anim_v_frames = 1
-particles_anim_loop = true
-
-[sub_resource type="Curve" id=6]
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
-
 [node name="Gibs" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="Head" type="RigidBody2D" parent="."]
-position = Vector2( -1, -19 )
-collision_layer = 0
-collision_mask = 2
-mass = 0.08
-physics_material_override = SubResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Head"]
-position = Vector2( 1, -2 )
-shape = SubResource( 1 )
-
-[node name="Sprite" type="Sprite" parent="Head"]
-texture = ExtResource( 1 )
-hframes = 6
-
-[node name="Torso" type="RigidBody2D" parent="."]
-position = Vector2( 2, -3 )
-collision_layer = 0
-collision_mask = 2
-mass = 0.08
-physics_material_override = SubResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Torso"]
-position = Vector2( -2, -1 )
-shape = SubResource( 7 )
-
-[node name="Sprite" type="Sprite" parent="Torso"]
-texture = ExtResource( 1 )
-hframes = 6
-frame = 5
-
-[node name="LArm" type="RigidBody2D" parent="."]
-position = Vector2( -9, -2 )
-collision_layer = 0
-collision_mask = 2
-mass = 0.08
-physics_material_override = SubResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LArm"]
-shape = SubResource( 2 )
-
-[node name="Sprite" type="Sprite" parent="LArm"]
-texture = ExtResource( 1 )
-hframes = 6
-frame = 1
-
-[node name="RArm" type="RigidBody2D" parent="."]
-position = Vector2( 6, -3 )
-collision_layer = 0
-collision_mask = 2
-mass = 0.08
-physics_material_override = SubResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RArm"]
-shape = SubResource( 2 )
-
-[node name="Sprite" type="Sprite" parent="RArm"]
-texture = ExtResource( 1 )
-hframes = 6
-frame = 4
-
-[node name="LLeg" type="RigidBody2D" parent="."]
-position = Vector2( -7, 10 )
-collision_layer = 0
-collision_mask = 2
-mass = 0.08
-physics_material_override = SubResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LLeg"]
-position = Vector2( 2, -2 )
-shape = SubResource( 3 )
-
-[node name="Sprite" type="Sprite" parent="LLeg"]
-texture = ExtResource( 1 )
-hframes = 6
-frame = 2
-
-[node name="RLeg" type="RigidBody2D" parent="."]
-position = Vector2( 1, 9 )
-collision_layer = 0
-collision_mask = 2
-mass = 0.08
-physics_material_override = SubResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RLeg"]
-position = Vector2( 1, -1 )
-shape = SubResource( 3 )
-
-[node name="Sprite" type="Sprite" parent="RLeg"]
-texture = ExtResource( 1 )
-hframes = 6
-frame = 3
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+[node name="Fire" type="CPUParticles2D" parent="."]
 material = SubResource( 5 )
 emitting = false
 lifetime = 2.0
@@ -142,3 +49,98 @@ scale_amount_curve = SubResource( 6 )
 anim_speed = 2.61
 anim_offset = 0.76
 anim_offset_random = 0.15
+
+[node name="Limbs" type="Node2D" parent="."]
+
+[node name="Head" type="RigidBody2D" parent="Limbs"]
+position = Vector2( -1, -19 )
+collision_layer = 0
+collision_mask = 2
+mass = 0.08
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/Head"]
+position = Vector2( 1, -2 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Limbs/Head"]
+texture = ExtResource( 1 )
+hframes = 6
+
+[node name="Torso" type="RigidBody2D" parent="Limbs"]
+position = Vector2( 2, -3 )
+collision_layer = 0
+collision_mask = 2
+mass = 0.08
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/Torso"]
+position = Vector2( -2, -1 )
+shape = SubResource( 7 )
+
+[node name="Sprite" type="Sprite" parent="Limbs/Torso"]
+texture = ExtResource( 1 )
+hframes = 6
+frame = 5
+
+[node name="LArm" type="RigidBody2D" parent="Limbs"]
+position = Vector2( -9, -2 )
+collision_layer = 0
+collision_mask = 2
+mass = 0.08
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/LArm"]
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="Limbs/LArm"]
+texture = ExtResource( 1 )
+hframes = 6
+frame = 1
+
+[node name="RArm" type="RigidBody2D" parent="Limbs"]
+position = Vector2( 6, -3 )
+collision_layer = 0
+collision_mask = 2
+mass = 0.08
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/RArm"]
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="Limbs/RArm"]
+texture = ExtResource( 1 )
+hframes = 6
+frame = 4
+
+[node name="LLeg" type="RigidBody2D" parent="Limbs"]
+position = Vector2( -7, 10 )
+collision_layer = 0
+collision_mask = 2
+mass = 0.08
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/LLeg"]
+position = Vector2( 2, -2 )
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Limbs/LLeg"]
+texture = ExtResource( 1 )
+hframes = 6
+frame = 2
+
+[node name="RLeg" type="RigidBody2D" parent="Limbs"]
+position = Vector2( 1, 9 )
+collision_layer = 0
+collision_mask = 2
+mass = 0.08
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/RLeg"]
+position = Vector2( 1, -1 )
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Limbs/RLeg"]
+texture = ExtResource( 1 )
+hframes = 6
+frame = 3

@@ -1,38 +1,40 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://art/spritesheets/full_benj_spritesheet.png" type="Texture" id=2]
+[ext_resource path="res://scripts/Attack.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 11.5, 21.5771 )
 
+[sub_resource type="RayShape2D" id=13]
+length = 30.0
+
 [sub_resource type="Animation" id=2]
 length = 1.014
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.4 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "attack_damage"
-} ]
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Body/Sprite:frame")
+tracks/1/path = NodePath("Body/Sprite/Attacks/Guitar/Ray:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.4, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 6, 7, 0 ]
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -108,6 +110,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 0.0 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/Sprite/Attacks/Guitar/Ray:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
 
 [sub_resource type="AnimationNodeAnimation" id=5]
 animation = "Attack"
@@ -137,7 +151,7 @@ nodes/Attack/position = Vector2( 120, 100 )
 nodes/Point/node = SubResource( 12 )
 nodes/Point/position = Vector2( 420, 80 )
 nodes/output/position = Vector2( 740, 100 )
-node_connections = [ "output", 0, "Point", "Attack", 0, "Animation", "Attack", 1, "Animation 2", "Point", 0, "Attack", "Point", 1, "Animation 3" ]
+node_connections = [ "output", 0, "Point", "Point", 0, "Attack", "Point", 1, "Animation 3", "Attack", 0, "Animation", "Attack", 1, "Animation 2" ]
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 4
@@ -159,10 +173,17 @@ vframes = 4
 
 [node name="Attacks" type="Node2D" parent="Body/Sprite"]
 
-[node name="Guitar" type="RayCast2D" parent="Body/Sprite/Attacks"]
-enabled = true
-cast_to = Vector2( 30, 0 )
+[node name="Guitar" type="Area2D" parent="Body/Sprite/Attacks"]
+rotation = -1.57079
+collision_layer = 0
 collision_mask = 8
+input_pickable = false
+script = ExtResource( 3 )
+
+[node name="Ray" type="CollisionShape2D" parent="Body/Sprite/Attacks/Guitar"]
+position = Vector2( 5.00006, 12 )
+shape = SubResource( 13 )
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack = SubResource( 2 )

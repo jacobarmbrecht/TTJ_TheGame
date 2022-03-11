@@ -95,3 +95,5 @@ position = Vector2( 368, 461 )
 
 [node name="Mannequin5" parent="Baddies" instance=ExtResource( 5 )]
 position = Vector2( 142, 391 )
+
+[editable path="Player"]
