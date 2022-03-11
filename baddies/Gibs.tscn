@@ -4,15 +4,6 @@
 [ext_resource path="res://baddies/Gibs.gd" type="Script" id=2]
 [ext_resource path="res://art/spritesheets/ARW_2D_Flame_Sprite_Sheet_.png" type="Texture" id=3]
 
-[sub_resource type="CanvasItemMaterial" id=5]
-particles_animation = true
-particles_anim_h_frames = 7
-particles_anim_v_frames = 1
-particles_anim_loop = true
-
-[sub_resource type="Curve" id=6]
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
-
 [sub_resource type="PhysicsMaterial" id=4]
 bounce = 0.44
 
@@ -32,23 +23,17 @@ height = 6.0
 radius = 3.0
 height = 10.0
 
+[sub_resource type="CanvasItemMaterial" id=5]
+particles_animation = true
+particles_anim_h_frames = 7
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.721429, 0.838636 ), -0.945454, -0.945454, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
 [node name="Gibs" type="Node2D"]
 script = ExtResource( 2 )
-
-[node name="Fire" type="CPUParticles2D" parent="."]
-material = SubResource( 5 )
-emitting = false
-lifetime = 2.0
-one_shot = true
-explosiveness = 1.0
-texture = ExtResource( 3 )
-direction = Vector2( 0, -1 )
-initial_velocity = 68.03
-scale_amount_random = 0.39
-scale_amount_curve = SubResource( 6 )
-anim_speed = 2.61
-anim_offset = 0.76
-anim_offset_random = 0.15
 
 [node name="Limbs" type="Node2D" parent="."]
 
@@ -144,3 +129,23 @@ shape = SubResource( 3 )
 texture = ExtResource( 1 )
 hframes = 6
 frame = 3
+
+[node name="Fire" type="CPUParticles2D" parent="."]
+material = SubResource( 5 )
+position = Vector2( 0, -18 )
+emitting = false
+amount = 14
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource( 3 )
+emission_shape = 1
+emission_sphere_radius = 10.0
+direction = Vector2( 0, -1 )
+spread = 60.0
+initial_velocity = 70.0
+scale_amount_random = 0.39
+scale_amount_curve = SubResource( 6 )
+anim_speed = 2.61
+anim_offset = 1.0
+anim_offset_random = 1.0
