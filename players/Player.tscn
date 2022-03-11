@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://art/spritesheets/benj_resized.png" type="Texture" id=2]
@@ -34,7 +34,7 @@ tracks/0/keys = {
 } ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:frame")
+tracks/1/path = NodePath("Body/Sprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -51,7 +51,7 @@ length = 2.66
 loop = true
 step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Body/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -63,10 +63,26 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
+[sub_resource type="Animation" id=10]
+resource_name = "Point"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 3, 0 ]
+}
+
 [sub_resource type="Animation" id=4]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Body/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -81,6 +97,9 @@ tracks/0/keys = {
 [sub_resource type="AnimationNodeAnimation" id=5]
 animation = "Attack"
 
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "Point"
+
 [sub_resource type="AnimationNodeAnimation" id=6]
 animation = "Idle"
 
@@ -88,16 +107,22 @@ animation = "Idle"
 fadein_time = 0.0
 fadeout_time = 0.0
 
+[sub_resource type="AnimationNodeOneShot" id=12]
+
 [sub_resource type="AnimationNodeBlendTree" id=8]
-graph_offset = Vector2( -492.944, 34.875 )
+graph_offset = Vector2( -470, 39.5 )
 nodes/Animation/node = SubResource( 6 )
-nodes/Animation/position = Vector2( -120, 100 )
+nodes/Animation/position = Vector2( -120, 60 )
 "nodes/Animation 2/node" = SubResource( 5 )
 "nodes/Animation 2/position" = Vector2( -160, 200 )
+"nodes/Animation 3/node" = SubResource( 11 )
+"nodes/Animation 3/position" = Vector2( 100, 320 )
 nodes/Attack/node = SubResource( 7 )
 nodes/Attack/position = Vector2( 120, 100 )
-nodes/output/position = Vector2( 380, 100 )
-node_connections = [ "output", 0, "Attack", "Attack", 0, "Animation", "Attack", 1, "Animation 2" ]
+nodes/Point/node = SubResource( 12 )
+nodes/Point/position = Vector2( 320, 100 )
+nodes/output/position = Vector2( 520, 100 )
+node_connections = [ "output", 0, "Point", "Attack", 0, "Animation", "Attack", 1, "Animation 2", "Point", 0, "Attack", "Point", 1, "Animation 3" ]
 
 [sub_resource type="SpriteFrames" id=9]
 animations = [ {
@@ -111,11 +136,6 @@ animations = [ {
 "name": "idle",
 "speed": 0.75
 }, {
-"frames": [ ExtResource( 7 ), ExtResource( 3 ) ],
-"loop": true,
-"name": "special",
-"speed": 16.0
-}, {
 "frames": [ ExtResource( 12 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "attack",
@@ -125,6 +145,11 @@ animations = [ {
 "loop": true,
 "name": "walk",
 "speed": 4.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "special",
+"speed": 16.0
 } ]
 
 [node name="Player" type="KinematicBody2D"]
@@ -137,9 +162,25 @@ position = Vector2( -3.5, 8.5 )
 scale = Vector2( 1, 1.08912 )
 shape = SubResource( 1 )
 
+[node name="Sprite" type="Sprite" parent="Body"]
+position = Vector2( 5.5, -5.96812 )
+scale = Vector2( 1, 0.918172 )
+texture = ExtResource( 2 )
+offset = Vector2( 17.414, 0 )
+hframes = 4
+vframes = 3
+
+[node name="Attacks" type="Node2D" parent="Body/Sprite"]
+
+[node name="Guitar" type="RayCast2D" parent="Body/Sprite/Attacks"]
+enabled = true
+cast_to = Vector2( 30, 0 )
+collision_mask = 8
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack = SubResource( 2 )
 anims/Idle = SubResource( 3 )
+anims/Point = SubResource( 10 )
 anims/RESET = SubResource( 4 )
 
 [node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer"]
@@ -147,26 +188,13 @@ tree_root = SubResource( 8 )
 anim_player = NodePath("..")
 active = true
 parameters/Attack/active = false
+parameters/Point/active = false
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+visible = false
 frames = SubResource( 9 )
 animation = "attack"
-frame = 1
 playing = true
-
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 2, 2 )
-texture = ExtResource( 2 )
-offset = Vector2( 17.414, 0 )
-hframes = 4
-vframes = 3
-
-[node name="Attacks" type="Node2D" parent="Sprite"]
-
-[node name="Guitar" type="RayCast2D" parent="Sprite/Attacks"]
-enabled = true
-cast_to = Vector2( 30, 0 )
-collision_mask = 8
 
 [node name="AttackTimer" type="Timer" parent="."]
 

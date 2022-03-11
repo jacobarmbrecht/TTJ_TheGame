@@ -59,7 +59,7 @@ func _physics_process(delta):
 		if velocity.x != 0:
 			$AnimatedSprite.animation = "walk"
 			$AnimatedSprite.flip_h = velocity.x < 0
-			$Sprite.scale.x = 1 if velocity.x > 0 else -1 ## Must also turn sprite for correct attack vectors
+			$Body.scale.x = 1 if velocity.x > 0 else -1 ## Must also turn sprite for correct attack vectors
 		else: #set the default as idle
 			$AnimatedSprite.animation = "idle"
 
@@ -79,6 +79,7 @@ func _physics_process(delta):
 			$AttackRate.start()
 		elif taunt_pressed and attack_rate_done:
 			$AnimatedSprite.animation = "taunt"
+			do_point()
 			is_attacking = true
 			$TauntTimer.start()
 			attack_rate_done = false
@@ -94,6 +95,9 @@ func _physics_process(delta):
 #danes animation tree do_attack
 func do_attack():
 	anim_tree["parameters/Attack/active"] = 1
+	
+func do_point():
+	anim_tree["parameters/Point/active"] = 1
 
 #timer destination for ending the attack animations
 func end_attack():
@@ -113,7 +117,7 @@ func _on_Player_body_entered(body):
 	emit_signal("hit")
 
 func attack_damage():
-	var baddie = $Sprite/Attacks/Guitar.get_collider()
+	var baddie = $Body/Sprite/Attacks/Guitar.get_collider()
 	if baddie and baddie.has_method("die"):
 		baddie.call_deferred("die")
 
