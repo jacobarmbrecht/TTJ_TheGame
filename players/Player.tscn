@@ -1,18 +1,7 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://art/spritesheets/full_benj_spritesheet.png" type="Texture" id=2]
-[ext_resource path="res://art/sprites/benj/benj_special2.png" type="Texture" id=3]
-[ext_resource path="res://art/sprites/benj/benj_walk2.png" type="Texture" id=4]
-[ext_resource path="res://art/sprites/benj/benj_idle1.png" type="Texture" id=5]
-[ext_resource path="res://art/sprites/benj/benj_attack2.png" type="Texture" id=6]
-[ext_resource path="res://art/sprites/benj/benj_special1.png" type="Texture" id=7]
-[ext_resource path="res://art/sprites/benj/benj_point2.png" type="Texture" id=8]
-[ext_resource path="res://art/sprites/benj/benj_walk1.png" type="Texture" id=9]
-[ext_resource path="res://art/sprites/benj/benj_walk3.png" type="Texture" id=10]
-[ext_resource path="res://art/sprites/benj/benj_point1.png" type="Texture" id=11]
-[ext_resource path="res://art/sprites/benj/benj_attack1.png" type="Texture" id=12]
-[ext_resource path="res://art/sprites/benj/benj_idle2.png" type="Texture" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 11.5, 21.5771 )
@@ -107,6 +96,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [ 0 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="AnimationNodeAnimation" id=5]
 animation = "Attack"
@@ -124,7 +125,7 @@ fadeout_time = 0.0
 [sub_resource type="AnimationNodeOneShot" id=12]
 
 [sub_resource type="AnimationNodeBlendTree" id=8]
-graph_offset = Vector2( -470, 39.5 )
+graph_offset = Vector2( -339.775, -169.771 )
 nodes/Animation/node = SubResource( 6 )
 nodes/Animation/position = Vector2( -120, 60 )
 "nodes/Animation 2/node" = SubResource( 5 )
@@ -134,37 +135,9 @@ nodes/Animation/position = Vector2( -120, 60 )
 nodes/Attack/node = SubResource( 7 )
 nodes/Attack/position = Vector2( 120, 100 )
 nodes/Point/node = SubResource( 12 )
-nodes/Point/position = Vector2( 320, 100 )
-nodes/output/position = Vector2( 520, 100 )
+nodes/Point/position = Vector2( 420, 80 )
+nodes/output/position = Vector2( 740, 100 )
 node_connections = [ "output", 0, "Point", "Attack", 0, "Animation", "Attack", 1, "Animation 2", "Point", 0, "Attack", "Point", 1, "Animation 3" ]
-
-[sub_resource type="SpriteFrames" id=9]
-animations = [ {
-"frames": [ ExtResource( 11 ), ExtResource( 8 ) ],
-"loop": true,
-"name": "point",
-"speed": 0.75
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 13 ), ExtResource( 5 ) ],
-"loop": true,
-"name": "idle",
-"speed": 0.75
-}, {
-"frames": [ ExtResource( 9 ), ExtResource( 4 ), ExtResource( 10 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "walk",
-"speed": 4.0
-}, {
-"frames": [ ExtResource( 12 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "attack",
-"speed": 2.0
-}, {
-"frames": [ ExtResource( 7 ), ExtResource( 3 ) ],
-"loop": true,
-"name": "special",
-"speed": 16.0
-} ]
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 4
@@ -203,12 +176,6 @@ anim_player = NodePath("..")
 active = true
 parameters/Attack/active = false
 parameters/Point/active = false
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-visible = false
-frames = SubResource( 9 )
-animation = "attack"
-playing = true
 
 [node name="AttackTimer" type="Timer" parent="."]
 
