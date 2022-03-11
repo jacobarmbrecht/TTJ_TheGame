@@ -98,6 +98,9 @@ func do_attack():
 	
 func do_point():
 	anim_tree["parameters/Point/active"] = 1
+	
+func handle_taunt():
+	print("Fuck you")
 
 #timer destination for ending the attack animations
 func end_attack():
