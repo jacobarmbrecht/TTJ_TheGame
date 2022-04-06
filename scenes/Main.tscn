@@ -64,6 +64,9 @@ position = Vector2( 189, 504 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
+limit_left = -825
+limit_right = 1300
+limit_bottom = 599
 drag_margin_h_enabled = true
 
 [node name="Floor" type="TileMap" parent="."]
