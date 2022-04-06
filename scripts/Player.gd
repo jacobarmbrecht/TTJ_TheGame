@@ -3,7 +3,7 @@ extends KinematicBody2D
 onready var anim_tree = $AnimationPlayer/AnimationTree
 onready var attacks = $Body/Sprite/Attacks
 
-export var speed : int = 100 ## Player speed
+export var speed : int = 5 ## Player speed
 export var jumpForce : int = 500
 export var gravity : int = 800
 export var damp : float = 0.9

@@ -61,7 +61,6 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
 position = Vector2( 189, 504 )
-speed = 5
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
