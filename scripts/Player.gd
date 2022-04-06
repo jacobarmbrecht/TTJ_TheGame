@@ -6,6 +6,10 @@ onready var attacks = $Body/Sprite/Attacks
 export var speed : int = 100 ## Player speed
 export var jumpForce : int = 500
 export var gravity : int = 800
+export var damp : float = 0.9
+export var friction : float = 20.0
+export var min_speed : float = 1.0
+
 var velocity = Vector2.ZERO  ## The player's movement vector.
 
 var is_attacking = false
@@ -20,7 +24,11 @@ func _physics_process(delta):
 
 	## "disable" inputs when the player is attacking
 	if !is_attacking:
-		velocity.x = 0
+		if abs(velocity.x) < min_speed:
+			velocity.x = 0.0
+		velocity.x = sign(velocity.x) * lerp(0.0, abs(velocity.x), 1.0 - damp * delta)
+		if is_on_floor():
+			velocity.x = sign(velocity.x) * max(0.0, abs(velocity.x) - friction * delta)
 		## Movement is just if because of additive velocities
 		if Input.is_action_pressed("right"):
 			velocity.x += speed
