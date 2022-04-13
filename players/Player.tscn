@@ -31,10 +31,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.4, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0.1, 0.3, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ false, true ]
+"values": [ true, false, true ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -123,7 +123,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=7]
 resource_name = "Walk"
 length = 1.2
 loop = true
@@ -140,45 +140,45 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 9 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=14]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "Attack"
 
-[sub_resource type="AnimationNodeAnimation" id=15]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "Idle"
 
-[sub_resource type="AnimationNodeAnimation" id=16]
+[sub_resource type="AnimationNodeAnimation" id=10]
 animation = "Point"
 
-[sub_resource type="AnimationNodeAnimation" id=17]
+[sub_resource type="AnimationNodeAnimation" id=11]
 animation = "Walk"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
 switch_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
 switch_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
 
-[sub_resource type="AnimationNodeStateMachine" id=23]
-states/Attack/node = SubResource( 14 )
+[sub_resource type="AnimationNodeStateMachine" id=18]
+states/Attack/node = SubResource( 8 )
 states/Attack/position = Vector2( 350, 376 )
-states/Idle/node = SubResource( 15 )
+states/Idle/node = SubResource( 9 )
 states/Idle/position = Vector2( 147, 383 )
-states/Point/node = SubResource( 16 )
+states/Point/node = SubResource( 10 )
 states/Point/position = Vector2( 350, 203 )
-states/Walk/node = SubResource( 17 )
+states/Walk/node = SubResource( 11 )
 states/Walk/position = Vector2( 446, 248 )
-transitions = [ "Idle", "Point", SubResource( 18 ), "Idle", "Walk", SubResource( 19 ), "Idle", "Attack", SubResource( 20 ), "Point", "Idle", SubResource( 21 ), "Attack", "Idle", SubResource( 22 ), "Walk", "Idle", SubResource( 25 ) ]
+transitions = [ "Idle", "Point", SubResource( 12 ), "Idle", "Walk", SubResource( 13 ), "Idle", "Attack", SubResource( 14 ), "Point", "Idle", SubResource( 15 ), "Attack", "Idle", SubResource( 16 ), "Walk", "Idle", SubResource( 17 ) ]
 start_node = "Idle"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=24]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 4
@@ -212,19 +212,20 @@ script = ExtResource( 3 )
 [node name="Ray" type="CollisionShape2D" parent="Body/Sprite/Attacks/Guitar"]
 position = Vector2( 5.00006, 12 )
 shape = SubResource( 2 )
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack = SubResource( 3 )
 anims/Idle = SubResource( 4 )
 anims/Point = SubResource( 5 )
 anims/RESET = SubResource( 6 )
-anims/Walk = SubResource( 13 )
+anims/Walk = SubResource( 7 )
 
 [node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer"]
-tree_root = SubResource( 23 )
+tree_root = SubResource( 18 )
 anim_player = NodePath("..")
 active = true
-parameters/playback = SubResource( 24 )
+parameters/playback = SubResource( 19 )
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 0.6
