@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://art/spritesheets/full_benj_spritesheet.png" type="Texture" id=2]
@@ -7,11 +7,11 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 11.5, 21.5771 )
 
-[sub_resource type="RayShape2D" id=13]
+[sub_resource type="RayShape2D" id=2]
 length = 30.0
 
-[sub_resource type="Animation" id=2]
-length = 1.014
+[sub_resource type="Animation" id=3]
+length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body/Sprite:frame")
 tracks/0/interp = 1
@@ -19,7 +19,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4, 1 ),
+"times": PoolRealArray( 0, 0.3, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 6, 7, 0 ]
@@ -37,7 +37,7 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 2.66
 loop = true
 step = 0.05
@@ -54,7 +54,7 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=5]
 resource_name = "Point"
 length = 2.0
 tracks/0/type = "value"
@@ -84,7 +84,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=6]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body/Sprite:frame")
@@ -123,40 +123,68 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=5]
+[sub_resource type="Animation" id=13]
+resource_name = "Walk"
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 8, 9, 10, 9 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=14]
 animation = "Attack"
 
-[sub_resource type="AnimationNodeAnimation" id=11]
-animation = "Point"
-
-[sub_resource type="AnimationNodeAnimation" id=6]
+[sub_resource type="AnimationNodeAnimation" id=15]
 animation = "Idle"
 
-[sub_resource type="AnimationNodeOneShot" id=7]
-fadein_time = 0.0
-fadeout_time = 0.0
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "Point"
 
-[sub_resource type="AnimationNodeOneShot" id=12]
+[sub_resource type="AnimationNodeAnimation" id=17]
+animation = "Walk"
 
-[sub_resource type="AnimationNodeBlendTree" id=8]
-graph_offset = Vector2( -339.775, -169.771 )
-nodes/Animation/node = SubResource( 6 )
-nodes/Animation/position = Vector2( -120, 60 )
-"nodes/Animation 2/node" = SubResource( 5 )
-"nodes/Animation 2/position" = Vector2( -160, 200 )
-"nodes/Animation 3/node" = SubResource( 11 )
-"nodes/Animation 3/position" = Vector2( 100, 320 )
-nodes/Attack/node = SubResource( 7 )
-nodes/Attack/position = Vector2( 120, 100 )
-nodes/Point/node = SubResource( 12 )
-nodes/Point/position = Vector2( 420, 80 )
-nodes/output/position = Vector2( 740, 100 )
-node_connections = [ "output", 0, "Point", "Point", 0, "Attack", "Point", 1, "Animation 3", "Attack", 0, "Animation", "Attack", 1, "Animation 2" ]
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+
+[sub_resource type="AnimationNodeStateMachine" id=23]
+states/Attack/node = SubResource( 14 )
+states/Attack/position = Vector2( 350, 376 )
+states/Idle/node = SubResource( 15 )
+states/Idle/position = Vector2( 147, 383 )
+states/Point/node = SubResource( 16 )
+states/Point/position = Vector2( 350, 203 )
+states/Walk/node = SubResource( 17 )
+states/Walk/position = Vector2( 446, 248 )
+transitions = [ "Idle", "Point", SubResource( 18 ), "Idle", "Walk", SubResource( 19 ), "Idle", "Attack", SubResource( 20 ), "Point", "Idle", SubResource( 21 ), "Attack", "Idle", SubResource( 22 ), "Walk", "Idle", SubResource( 25 ) ]
+start_node = "Idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=24]
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 4
 collision_mask = 2
 script = ExtResource( 1 )
+max_walk_speed = 117.0
 
 [node name="Body" type="CollisionShape2D" parent="."]
 position = Vector2( -3.5, 8.5 )
@@ -170,35 +198,36 @@ texture = ExtResource( 2 )
 offset = Vector2( 17.414, 0 )
 hframes = 4
 vframes = 4
+frame = 1
 
 [node name="Attacks" type="Node2D" parent="Body/Sprite"]
 
 [node name="Guitar" type="Area2D" parent="Body/Sprite/Attacks"]
 rotation = -1.57079
+input_pickable = false
 collision_layer = 0
 collision_mask = 8
-input_pickable = false
 script = ExtResource( 3 )
 
 [node name="Ray" type="CollisionShape2D" parent="Body/Sprite/Attacks/Guitar"]
 position = Vector2( 5.00006, 12 )
-shape = SubResource( 13 )
-disabled = true
+shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Attack = SubResource( 2 )
-anims/Idle = SubResource( 3 )
-anims/Point = SubResource( 10 )
-anims/RESET = SubResource( 4 )
+anims/Attack = SubResource( 3 )
+anims/Idle = SubResource( 4 )
+anims/Point = SubResource( 5 )
+anims/RESET = SubResource( 6 )
+anims/Walk = SubResource( 13 )
 
 [node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer"]
-tree_root = SubResource( 8 )
+tree_root = SubResource( 23 )
 anim_player = NodePath("..")
 active = true
-parameters/Attack/active = false
-parameters/Point/active = false
+parameters/playback = SubResource( 24 )
 
 [node name="AttackTimer" type="Timer" parent="."]
+wait_time = 0.6
 
 [node name="SpecialTimer" type="Timer" parent="."]
 wait_time = 2.5
@@ -208,7 +237,7 @@ one_shot = true
 wait_time = 2.0
 
 [node name="AttackRate" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 0.8
 
 [connection signal="timeout" from="AttackTimer" to="." method="end_attack"]
 [connection signal="timeout" from="SpecialTimer" to="." method="end_attack"]

@@ -1,0 +1,15 @@
+TTJ GAME TODO:
+
+-Build level
+
+-Finish and polish player anims animations (possible jump)
+
+-add enemy animations
+
+-boss animations and programming
+
+-HUD: health, special, 
+
+-pickups (optional)
+-music (end)
+-

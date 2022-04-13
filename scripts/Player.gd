@@ -2,13 +2,15 @@ extends KinematicBody2D
 
 onready var anim_tree = $AnimationPlayer/AnimationTree
 onready var attacks = $Body/Sprite/Attacks
+onready var state_machine = $AnimationPlayer/AnimationTree.get("parameters/playback")
 
 export var speed : int = 5 ## Player speed
 export var jumpForce : int = 500
 export var gravity : int = 800
 export var damp : float = 0.9
-export var friction : float = 20.0
+export var friction : float = 100.0
 export var min_speed : float = 1.0
+export var max_walk_speed : float = 5.0
 
 var velocity = Vector2.ZERO  ## The player's movement vector.
 
@@ -26,14 +28,17 @@ func _physics_process(delta):
 	if !is_attacking:
 		if abs(velocity.x) < min_speed:
 			velocity.x = 0.0
+
 		velocity.x = sign(velocity.x) * lerp(0.0, abs(velocity.x), 1.0 - damp * delta)
 		if is_on_floor():
 			velocity.x = sign(velocity.x) * max(0.0, abs(velocity.x) - friction * delta)
 		## Movement is just if because of additive velocities
 		if Input.is_action_pressed("right"):
-			velocity.x += speed
+			velocity.x = max_walk_speed
+			#velocity.x += speed
 		if Input.is_action_pressed("left"):
-			velocity.x -= speed
+			velocity.x = -max_walk_speed
+			#velocity.x -= speed
 
 		## Jump
 		if Input.is_action_pressed("jump") and is_on_floor():
@@ -42,8 +47,8 @@ func _physics_process(delta):
 		## Attack buttons are and if elif case
 		if Input.is_action_pressed("attack"):
 			if is_on_floor(): ## Allow movement if attacking from air, but not on the ground
+				attack_pressed = true
 				velocity.x = 0
-			attack_pressed = true
 		elif Input.is_action_pressed("special"):
 			velocity.x = 0
 			special_pressed = true
@@ -52,7 +57,12 @@ func _physics_process(delta):
 			taunt_pressed = true
 
 		if velocity.x != 0:
+			state_machine.travel("Walk")
 			$Body.scale.x = 1 if velocity.x > 0 else -1
+		if velocity.length() == 0:
+			state_machine.travel("Idle")
+			
+			
 
 		if attack_pressed and attack_rate_done:
 			do_attack()
@@ -74,12 +84,15 @@ func _physics_process(delta):
 
 	velocity.y += gravity*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
+	
 
 func do_attack():
-	anim_tree["parameters/Attack/active"] = 1
+	state_machine.travel("Attack")
+	#anim_tree["parameters/Attack/active"] = 1
 	
 func do_point():
-	anim_tree["parameters/Point/active"] = 1
+	state_machine.travel("Point")
+	#anim_tree["parameters/Point/active"] = 1
 	
 func handle_taunt():
 	print("Fuck you")
