@@ -61,8 +61,8 @@ func _physics_process(delta):
 			$Body.scale.x = 1 if velocity.x > 0 else -1
 		if velocity.length() == 0:
 			state_machine.travel("Idle")
-			
-			
+
+
 
 		if attack_pressed and attack_rate_done:
 			do_attack()
@@ -84,16 +84,16 @@ func _physics_process(delta):
 
 	velocity.y += gravity*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
-	
+
 
 func do_attack():
 	state_machine.travel("Attack")
 	#anim_tree["parameters/Attack/active"] = 1
-	
+
 func do_point():
 	state_machine.travel("Point")
 	#anim_tree["parameters/Point/active"] = 1
-	
+
 func handle_taunt():
 	print("Fuck you")
 

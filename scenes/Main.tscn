@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://art/images/castlebrick64.png" type="Texture" id=1]
 [ext_resource path="res://art/images/tilebrick.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scripts/MobSpawnLocation.gd" type="Script" id=4]
 [ext_resource path="res://baddies/Mannequin.tscn" type="PackedScene" id=5]
 [ext_resource path="res://players/Player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/Menu.tscn" type="PackedScene" id=7]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=1]
 
@@ -70,6 +71,9 @@ position = Vector2( 189, 504 )
 gravity = 980
 max_walk_speed = 85.0
 
+[node name="Sprite" parent="Player/Body" index="0"]
+frame = 0
+
 [node name="AnimationTree" parent="Player/AnimationPlayer" index="0"]
 parameters/playback = SubResource( 1 )
 
@@ -117,6 +121,10 @@ LOW_OFFSET = -250
 HIGH_OFFSET = 250
 
 [node name="MobTimer" type="Timer" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Menu" parent="CanvasLayer" instance=ExtResource( 7 )]
 
 [connection signal="timeout" from="MobTimer" to="." method="_on_MobTimer_timeout"]
 

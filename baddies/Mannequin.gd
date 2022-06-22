@@ -19,10 +19,13 @@ func _physics_process(_delta):
 		movement = Vector2(0 , gravity)
 	else:
 		movement = Vector2(speed , gravity)
-		
+
 	var move_vec = transform.basis_xform(movement) ## Move relative to direction
 	move_and_slide(move_vec, Vector2.UP)
-	
+
+	if len($Hurtbox.get_overlapping_bodies()) > 0:
+		HealthController.player_hit()
+
 
 func die():
 	var gibs_instance = gibs.instance()
