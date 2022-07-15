@@ -15,9 +15,17 @@ export var max_walk_speed : float = 5.0
 var velocity = Vector2.ZERO  ## The player's movement vector.
 
 var is_attacking = false
+var is_jumping = false
 var attack_rate_done = true
+var is_dead = false
+
+func _ready():
+	HealthController.connect("death", self, "do_death")
 
 func _physics_process(delta):
+	
+	if is_on_floor():
+		is_jumping = false
 
 	var attack_pressed = false
 	var special_pressed = false
@@ -25,7 +33,7 @@ func _physics_process(delta):
 
 
 	## "disable" inputs when the player is attacking
-	if !is_attacking:
+	if !is_attacking and !is_dead:
 		if abs(velocity.x) < min_speed:
 			velocity.x = 0.0
 
@@ -43,12 +51,16 @@ func _physics_process(delta):
 		## Jump
 		if Input.is_action_pressed("jump") and is_on_floor():
 			velocity.y -= jumpForce
+			do_jump()
+			is_jumping = true
 
 		## Attack buttons are and if elif case
 		if Input.is_action_pressed("attack"):
 			if is_on_floor(): ## Allow movement if attacking from air, but not on the ground
 				attack_pressed = true
 				velocity.x = 0
+			else: 
+				attack_pressed = true
 		elif Input.is_action_pressed("special"):
 			velocity.x = 0
 			special_pressed = true
@@ -56,7 +68,7 @@ func _physics_process(delta):
 			velocity.x = 0
 			taunt_pressed = true
 
-		if velocity.x != 0:
+		if velocity.x != 0 and !is_jumping:
 			state_machine.travel("Walk")
 			$Body.scale.x = 1 if velocity.x > 0 else -1
 		if velocity.length() == 0:
@@ -81,7 +93,7 @@ func _physics_process(delta):
 			$TauntTimer.start()
 			attack_rate_done = false
 			$AttackRate.start()
-
+			
 	velocity.y += gravity*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -97,6 +109,13 @@ func do_point():
 func handle_taunt():
 	print("Fuck you")
 
+func do_jump():
+	state_machine.travel("Jump")
+	
+func do_death():
+	state_machine.travel("Death")
+	is_dead = true
+	
 ## Timer destination for ending the attack animations
 ## XXX: Do we still need this?
 func end_attack():

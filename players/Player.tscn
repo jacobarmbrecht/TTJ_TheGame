@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://art/spritesheets/full_benj_spritesheet.png" type="Texture" id=2]
@@ -37,6 +37,22 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
+[sub_resource type="Animation" id=26]
+resource_name = "Death"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 14, 15 ]
+}
+
 [sub_resource type="Animation" id=4]
 length = 2.66
 loop = true
@@ -52,6 +68,21 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "Jump"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 13 ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -143,8 +174,14 @@ tracks/0/keys = {
 [sub_resource type="AnimationNodeAnimation" id=8]
 animation = "Attack"
 
+[sub_resource type="AnimationNodeAnimation" id=27]
+animation = "Death"
+
 [sub_resource type="AnimationNodeAnimation" id=9]
 animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=21]
+animation = "Jump"
 
 [sub_resource type="AnimationNodeAnimation" id=10]
 animation = "Point"
@@ -166,17 +203,32 @@ switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=17]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+
 [sub_resource type="AnimationNodeStateMachine" id=18]
 states/Attack/node = SubResource( 8 )
 states/Attack/position = Vector2( 350, 376 )
+states/Death/node = SubResource( 27 )
+states/Death/position = Vector2( 364.808, 528.72 )
 states/Idle/node = SubResource( 9 )
 states/Idle/position = Vector2( 147, 383 )
+states/Jump/node = SubResource( 21 )
+states/Jump/position = Vector2( 358.808, 473.72 )
 states/Point/node = SubResource( 10 )
 states/Point/position = Vector2( 350, 203 )
 states/Walk/node = SubResource( 11 )
 states/Walk/position = Vector2( 446, 248 )
-transitions = [ "Idle", "Point", SubResource( 12 ), "Idle", "Walk", SubResource( 13 ), "Idle", "Attack", SubResource( 14 ), "Point", "Idle", SubResource( 15 ), "Attack", "Idle", SubResource( 16 ), "Walk", "Idle", SubResource( 17 ) ]
+transitions = [ "Idle", "Point", SubResource( 12 ), "Idle", "Walk", SubResource( 13 ), "Idle", "Attack", SubResource( 14 ), "Point", "Idle", SubResource( 15 ), "Attack", "Idle", SubResource( 16 ), "Walk", "Idle", SubResource( 17 ), "Idle", "Jump", SubResource( 22 ), "Jump", "Idle", SubResource( 23 ), "Jump", "Attack", SubResource( 24 ), "Attack", "Jump", SubResource( 25 ), "Idle", "Death", SubResource( 28 ) ]
 start_node = "Idle"
+graph_offset = Vector2( -283.192, 291.328 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=19]
 
@@ -198,7 +250,6 @@ texture = ExtResource( 2 )
 offset = Vector2( 17.414, 0 )
 hframes = 4
 vframes = 4
-frame = 1
 
 [node name="Attacks" type="Node2D" parent="Body/Sprite"]
 
@@ -216,7 +267,9 @@ disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack = SubResource( 3 )
+anims/Death = SubResource( 26 )
 anims/Idle = SubResource( 4 )
+anims/Jump = SubResource( 20 )
 anims/Point = SubResource( 5 )
 anims/RESET = SubResource( 6 )
 anims/Walk = SubResource( 7 )

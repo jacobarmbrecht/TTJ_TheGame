@@ -8,6 +8,7 @@ func _ready():
 	randomize()
 	$MobTimer.start()
 	score = 0
+	HealthController.connect("death", self, "player_dead")
 	
 	
 func game_over():
@@ -31,3 +32,7 @@ func _on_MobTimer_timeout():
 func dead_mob():
 	score+=1
 	print(score)
+	
+
+func player_dead():
+	pass
