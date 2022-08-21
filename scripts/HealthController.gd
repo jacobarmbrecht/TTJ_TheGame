@@ -4,6 +4,7 @@ const PLAYER_HEALTH_MAX = 1000
 signal death
 
 onready var player_health = PLAYER_HEALTH_MAX
+onready var player_sprite = get_node("Sprite")
 
 func get_player_health():
 	return inverse_lerp(0, PLAYER_HEALTH_MAX, player_health)

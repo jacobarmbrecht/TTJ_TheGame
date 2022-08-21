@@ -19,7 +19,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3, 0.6 ),
+"times": PoolRealArray( 0, 0.27, 0.57 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 6, 7, 0 ]
@@ -37,7 +37,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=4]
 resource_name = "Death"
 length = 3.0
 tracks/0/type = "value"
@@ -53,7 +53,7 @@ tracks/0/keys = {
 "values": [ 14, 15 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 2.66
 loop = true
 step = 0.05
@@ -70,7 +70,7 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=6]
 resource_name = "Jump"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body/Sprite:frame")
@@ -85,8 +85,7 @@ tracks/0/keys = {
 "values": [ 13 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "Point"
+[sub_resource type="Animation" id=7]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body/Sprite:frame")
@@ -115,7 +114,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=8]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body/Sprite:frame")
@@ -154,8 +153,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "Walk"
+[sub_resource type="Animation" id=9]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -171,37 +169,37 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 9 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=10]
 animation = "Attack"
 
-[sub_resource type="AnimationNodeAnimation" id=27]
+[sub_resource type="AnimationNodeAnimation" id=11]
 animation = "Death"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=12]
 animation = "Idle"
 
-[sub_resource type="AnimationNodeAnimation" id=21]
+[sub_resource type="AnimationNodeAnimation" id=13]
 animation = "Jump"
 
-[sub_resource type="AnimationNodeAnimation" id=10]
+[sub_resource type="AnimationNodeAnimation" id=14]
 animation = "Point"
 
-[sub_resource type="AnimationNodeAnimation" id=11]
+[sub_resource type="AnimationNodeAnimation" id=15]
 animation = "Walk"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=12]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=13]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=14]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=15]
-switch_mode = 2
-
 [sub_resource type="AnimationNodeStateMachineTransition" id=16]
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=17]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=22]
 
@@ -211,26 +209,26 @@ switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=25]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+[sub_resource type="AnimationNodeStateMachineTransition" id=26]
 
-[sub_resource type="AnimationNodeStateMachine" id=18]
-states/Attack/node = SubResource( 8 )
+[sub_resource type="AnimationNodeStateMachine" id=27]
+states/Attack/node = SubResource( 10 )
 states/Attack/position = Vector2( 350, 376 )
-states/Death/node = SubResource( 27 )
+states/Death/node = SubResource( 11 )
 states/Death/position = Vector2( 364.808, 528.72 )
-states/Idle/node = SubResource( 9 )
+states/Idle/node = SubResource( 12 )
 states/Idle/position = Vector2( 147, 383 )
-states/Jump/node = SubResource( 21 )
+states/Jump/node = SubResource( 13 )
 states/Jump/position = Vector2( 358.808, 473.72 )
-states/Point/node = SubResource( 10 )
+states/Point/node = SubResource( 14 )
 states/Point/position = Vector2( 350, 203 )
-states/Walk/node = SubResource( 11 )
+states/Walk/node = SubResource( 15 )
 states/Walk/position = Vector2( 446, 248 )
-transitions = [ "Idle", "Point", SubResource( 12 ), "Idle", "Walk", SubResource( 13 ), "Idle", "Attack", SubResource( 14 ), "Point", "Idle", SubResource( 15 ), "Attack", "Idle", SubResource( 16 ), "Walk", "Idle", SubResource( 17 ), "Idle", "Jump", SubResource( 22 ), "Jump", "Idle", SubResource( 23 ), "Jump", "Attack", SubResource( 24 ), "Attack", "Jump", SubResource( 25 ), "Idle", "Death", SubResource( 28 ) ]
+transitions = [ "Idle", "Point", SubResource( 16 ), "Idle", "Walk", SubResource( 17 ), "Idle", "Attack", SubResource( 18 ), "Point", "Idle", SubResource( 19 ), "Attack", "Idle", SubResource( 20 ), "Walk", "Idle", SubResource( 21 ), "Idle", "Jump", SubResource( 22 ), "Jump", "Idle", SubResource( 23 ), "Jump", "Attack", SubResource( 24 ), "Attack", "Jump", SubResource( 25 ), "Idle", "Death", SubResource( 26 ) ]
 start_node = "Idle"
 graph_offset = Vector2( -283.192, 291.328 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=28]
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 4
@@ -250,6 +248,7 @@ texture = ExtResource( 2 )
 offset = Vector2( 17.414, 0 )
 hframes = 4
 vframes = 4
+frame = 1
 
 [node name="Attacks" type="Node2D" parent="Body/Sprite"]
 
@@ -267,18 +266,18 @@ disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack = SubResource( 3 )
-anims/Death = SubResource( 26 )
-anims/Idle = SubResource( 4 )
-anims/Jump = SubResource( 20 )
-anims/Point = SubResource( 5 )
-anims/RESET = SubResource( 6 )
-anims/Walk = SubResource( 7 )
+anims/Death = SubResource( 4 )
+anims/Idle = SubResource( 5 )
+anims/Jump = SubResource( 6 )
+anims/Point = SubResource( 7 )
+anims/RESET = SubResource( 8 )
+anims/Walk = SubResource( 9 )
 
 [node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer"]
-tree_root = SubResource( 18 )
+tree_root = SubResource( 27 )
 anim_player = NodePath("..")
 active = true
-parameters/playback = SubResource( 19 )
+parameters/playback = SubResource( 28 )
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 0.6
