@@ -48,7 +48,7 @@ __meta__ = {
 [node name="BossHealthbar" type="Sprite" parent="Control2"]
 modulate = Color( 1, 0, 0, 1 )
 material = SubResource( 3 )
-position = Vector2( 714.784, 3.8 )
-scale = Vector2( 0.315316, 0.5475 )
+position = Vector2( 1001.78, -0.200001 )
+scale = Vector2( -0.315, 0.548 )
 texture = ExtResource( 1 )
 centered = false
