@@ -10,3 +10,5 @@ func do_damage(baddie):
 	if baddie.has_method("die"):
 		baddie.call_deferred("die")
 		emit_signal("destroyed")
+	elif baddie.has_method("take_damage"):
+		baddie.call_deferred("take_damage")

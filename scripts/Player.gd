@@ -23,7 +23,7 @@ func _ready():
 	HealthController.connect("death", self, "do_death")
 
 func _physics_process(delta):
-	
+
 	if is_on_floor():
 		is_jumping = false
 
@@ -50,7 +50,7 @@ func _physics_process(delta):
 			#velocity.x = -max_walk_speed
 			velocity.x -= speed
 			direction = -1
-		
+
 		$Body.scale.x = 1 if direction > 0 else -1
 
 		## Jump
@@ -64,7 +64,7 @@ func _physics_process(delta):
 			if is_on_floor(): ## Allow movement if attacking from air, but not on the ground
 				attack_pressed = true
 				#velocity.x = 0
-			else: 
+			else:
 				attack_pressed = true
 		elif Input.is_action_pressed("special"):
 			velocity.x = 0
@@ -98,7 +98,7 @@ func _physics_process(delta):
 			$TauntTimer.start()
 			attack_rate_done = false
 			$AttackRate.start()
-			
+
 	velocity.y += gravity*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -116,11 +116,11 @@ func handle_taunt():
 
 func do_jump():
 	state_machine.travel("Jump")
-	
+
 func do_death():
 	state_machine.travel("Death")
 	is_dead = true
-	
+
 ## Timer destination for ending the attack animations
 ## XXX: Do we still need this?
 func end_attack():

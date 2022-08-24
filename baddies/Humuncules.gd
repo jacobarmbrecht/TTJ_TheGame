@@ -35,43 +35,46 @@ func _ready():
 	Fade_Out()
 	rng.randomize()
 
+func take_damage():
+	HealthController.boss_hit()
+
 func _physics_process(delta):
-	
+
 	var modulate_var = sprite.modulate
 	#print(modulate_var)
 	var move_var
-	
+
 	#get player position for the CHASE
 	var player_pos = get_node("/root/Main/Player").get_global_transform()
 	pos = player_pos.get_origin() as Vector2
-	
-	
-	
+
+
+
 
 	#velocity = move_and_slide(velocity, Vector2.UP)
 	var t
 	var r
-	t = delta*speed	
+	t = delta*speed
 	if(is_visible):
 		Fade_In()
 		if(is_dead):
 			pass
 			#do_death()
 		elif(is_attacking):
-			
+
 			if(!is_moving):
 				t = 0
 				#r = get_attack_r(t)
 				is_moving = true
-				
+
 			t = delta*speed
 			r = get_attack_r(t)
 			move_var = r
 		else:
-			
+
 			r = get_move_r(t)
 			move_var = r
-			
+
 		if len($Hurtbox.get_overlapping_bodies()) > 0:
 			HealthController.player_hit()
 	else:
@@ -79,12 +82,12 @@ func _physics_process(delta):
 			Fade_Out()
 		else:
 			Fade_In()
-			
+
 		r = get_move_r(t)
-		move_var = r	
-	
+		move_var = r
+
 	self.position = move_var
-	
+
 func do_attack():
 	attacktimer.start()
 	is_attacking = true
@@ -92,7 +95,7 @@ func do_attack():
 func AttackTime():
 	delaytimer.start()
 	state_machine.travel("Attack")
-	
+
 func AttackTimeFR():
 	do_attack()
 
@@ -100,42 +103,42 @@ func AttackTimeFR():
 func SpookyTime():
 	is_spooky = true
 	spookytimer.start()
-	
-	
+
+
 func get_attack_r(t: float):
 	var curr_pos = self.position as Vector2
 	#var player_pos = get_node("/root/Main/Player").get_global_transform()
 	#pos = player_pos.get_origin() as Vector2
-	
+
 	#decide which direction we are going
 	var multiplier = 1
 	if(rng.randi_range(0,1) == 0):
 		multiplier = -1
-	
+
 	var dest_pos = pos + Vector2(multiplier*rng.randf_range(500,1000),rng.randf_range(500,1000))
-	
+
 	var q0 = curr_pos.linear_interpolate(pos, t)
 	var q1 = pos.linear_interpolate(dest_pos, t)
 	var r = q0.linear_interpolate(q1,t)
-	
-	return r 
-	
+
+	return r
+
 func get_move_r(t: float):
 	var curr_pos = self.position as Vector2
 	var player_pos = get_node("/root/Main/Player").get_global_transform()
 	pos = player_pos.get_origin() as Vector2
-	
-	
+
+
 	var dest_pos = pos + pos_offset
-	
+
 	var r = curr_pos.linear_interpolate(dest_pos,t)
-	
+
 	return r
 
 func Fade_In():
 	if(!sprite.modulate.is_equal_approx(Color(1,1,1,1))):
 		sprite.modulate += Color(0,0,0,0.01)
-	
+
 func Fade_Out():
 	if(!sprite.modulate.is_equal_approx(Color(1,1,1,0))):
 		sprite.modulate -= Color(0,0,0,0.01)

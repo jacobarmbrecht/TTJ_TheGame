@@ -1,20 +1,17 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://art/images/health.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=2]
+[ext_resource path="res://shaders/wipe.gdshader" type="Shader" id=3]
 
-[sub_resource type="Shader" id=1]
-code = "shader_type canvas_item;
-
-uniform sampler2D MASK;
-
-void fragment() {
-	COLOR = texture(TEXTURE, UV);
-	COLOR.a *= texture(MASK, UV).x;
-}"
+[sub_resource type="ShaderMaterial" id=1]
 
 [sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
+shader = ExtResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = ExtResource( 3 )
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
@@ -22,6 +19,7 @@ anchor_bottom = 1.0
 script = ExtResource( 2 )
 
 [node name="Control" type="Control" parent="."]
+material = SubResource( 1 )
 anchor_left = 0.009
 anchor_top = 0.017
 anchor_right = 0.052
@@ -30,8 +28,27 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Healthbar" type="Sprite" parent="Control"]
-modulate = Color( 1, 0, 0, 1 )
+modulate = Color( 0, 0.227451, 1, 1 )
 material = SubResource( 2 )
+scale = Vector2( 0.315316, 0.5475 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Control2" type="Control" parent="."]
+anchor_left = 0.009
+anchor_top = 0.017
+anchor_right = 0.052
+anchor_bottom = 0.035
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="BossHealthbar" type="Sprite" parent="Control2"]
+modulate = Color( 1, 0, 0, 1 )
+material = SubResource( 3 )
+position = Vector2( 714.784, 3.8 )
 scale = Vector2( 0.315316, 0.5475 )
 texture = ExtResource( 1 )
 centered = false
