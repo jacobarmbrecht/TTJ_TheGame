@@ -9,6 +9,7 @@ func _ready():
 	$MobTimer.start()
 	score = 0
 	HealthController.connect("death", self, "player_dead")
+	get_node("Player/Body/Sprite/Attacks/Guitar").connect("destroyed", get_node("Humuncules"), "manne_destroyed")
 	
 	
 func game_over():

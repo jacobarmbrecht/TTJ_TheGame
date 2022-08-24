@@ -87,6 +87,7 @@ taunt={
 2d_physics/layer_2="floor"
 2d_physics/layer_3="player"
 2d_physics/layer_4="baddies"
+2d_physics/layer_5="godfly"
 
 [physics]
 

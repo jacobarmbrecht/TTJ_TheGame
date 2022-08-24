@@ -30,6 +30,7 @@ func _physics_process(delta):
 	var attack_pressed = false
 	var special_pressed = false
 	var taunt_pressed = false
+	var direction = 1
 
 
 	## "disable" inputs when the player is attacking
@@ -42,11 +43,15 @@ func _physics_process(delta):
 			velocity.x = sign(velocity.x) * max(0.0, abs(velocity.x) - friction * delta)
 		## Movement is just if because of additive velocities
 		if Input.is_action_pressed("right"):
-			velocity.x = max_walk_speed
-			#velocity.x += speed
+			#velocity.x = max_walk_speed
+			velocity.x += speed
+			direction = 1
 		if Input.is_action_pressed("left"):
-			velocity.x = -max_walk_speed
-			#velocity.x -= speed
+			#velocity.x = -max_walk_speed
+			velocity.x -= speed
+			direction = -1
+		
+		$Body.scale.x = 1 if direction > 0 else -1
 
 		## Jump
 		if Input.is_action_pressed("jump") and is_on_floor():
@@ -58,7 +63,7 @@ func _physics_process(delta):
 		if Input.is_action_pressed("attack"):
 			if is_on_floor(): ## Allow movement if attacking from air, but not on the ground
 				attack_pressed = true
-				velocity.x = 0
+				#velocity.x = 0
 			else: 
 				attack_pressed = true
 		elif Input.is_action_pressed("special"):
@@ -70,7 +75,7 @@ func _physics_process(delta):
 
 		if velocity.x != 0 and !is_jumping:
 			state_machine.travel("Walk")
-			$Body.scale.x = 1 if velocity.x > 0 else -1
+			#$Body.scale.x = 1 if velocity.x > 0 else -1
 		if velocity.length() == 0:
 			state_machine.travel("Idle")
 
