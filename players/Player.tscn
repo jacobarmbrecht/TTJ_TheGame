@@ -1,11 +1,17 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://art/spritesheets/full_benj_spritesheet.png" type="Texture" id=2]
 [ext_resource path="res://scripts/Attack.gd" type="Script" id=3]
+[ext_resource path="res://shaders/flash.shader" type="Shader" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 11.5, 21.5771 )
+
+[sub_resource type="ShaderMaterial" id=29]
+resource_local_to_scene = true
+shader = ExtResource( 4 )
+shader_param/active = false
 
 [sub_resource type="RayShape2D" id=2]
 length = 30.0
@@ -35,6 +41,22 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
+}
+
+[sub_resource type="Animation" id=30]
+resource_name = "Damage"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Sprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -234,6 +256,7 @@ graph_offset = Vector2( -283.192, 314.949 )
 collision_layer = 4
 collision_mask = 2
 script = ExtResource( 1 )
+speed = 6
 friction = 25.0
 max_walk_speed = 117.0
 
@@ -243,20 +266,22 @@ scale = Vector2( 1, 1.08912 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Body"]
+material = SubResource( 29 )
 position = Vector2( 0.5, -10.559 )
 scale = Vector2( 1, 0.918172 )
 texture = ExtResource( 2 )
 offset = Vector2( 17.414, 0 )
 hframes = 4
 vframes = 4
+frame = 1
 
 [node name="Attacks" type="Node2D" parent="Body/Sprite"]
 
 [node name="Guitar" type="Area2D" parent="Body/Sprite/Attacks"]
 rotation = -1.57079
+input_pickable = false
 collision_layer = 0
 collision_mask = 24
-input_pickable = false
 script = ExtResource( 3 )
 
 [node name="Ray" type="CollisionShape2D" parent="Body/Sprite/Attacks/Guitar"]
@@ -266,6 +291,7 @@ disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack = SubResource( 3 )
+anims/Damage = SubResource( 30 )
 anims/Death = SubResource( 4 )
 anims/Idle = SubResource( 5 )
 anims/Jump = SubResource( 6 )

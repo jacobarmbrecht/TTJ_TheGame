@@ -3,6 +3,8 @@ extends KinematicBody2D
 onready var anim_tree = $AnimationPlayer/AnimationTree
 onready var attacks = $Body/Sprite/Attacks
 onready var state_machine = $AnimationPlayer/AnimationTree.get("parameters/playback")
+onready var anim = $AnimationPlayer
+
 
 export var speed : int = 5 ## Player speed
 export var jumpForce : int = 500
@@ -21,6 +23,7 @@ var is_dead = false
 
 func _ready():
 	HealthController.connect("death", self, "do_death")
+	HealthController.connect("player_dam", self, "do_damage")
 
 func _physics_process(delta):
 
@@ -51,7 +54,7 @@ func _physics_process(delta):
 			velocity.x -= speed
 			direction = -1
 
-		$Body.scale.x = 1 if direction > 0 else -1
+		$Body.scale.x = 1 if velocity.x > 0 else -1
 
 		## Jump
 		if Input.is_action_pressed("jump") and is_on_floor():
@@ -98,10 +101,12 @@ func _physics_process(delta):
 			$TauntTimer.start()
 			attack_rate_done = false
 			$AttackRate.start()
+	else: 
+		if is_dead:
+			velocity = velocity / 1.2 #fake friction
 
 	velocity.y += gravity*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
-
 
 func do_attack():
 	state_machine.travel("Attack")
@@ -120,7 +125,9 @@ func do_jump():
 func do_death():
 	state_machine.travel("Death")
 	is_dead = true
-
+	
+func do_damage():
+	anim.play("Damage")
 ## Timer destination for ending the attack animations
 ## XXX: Do we still need this?
 func end_attack():

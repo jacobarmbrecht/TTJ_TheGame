@@ -7,6 +7,7 @@ export var threshold = 5
 
 
 onready var anim_tree = $AnimationPlayer/AnimationTree
+onready var anim = $AnimationPlayer
 onready var attacks = $Body/Sprite/Attacks
 onready var state_machine = $AnimationPlayer/AnimationTree.get("parameters/playback")
 onready var sprite = $Body/Sprite
@@ -34,6 +35,7 @@ var rng = RandomNumberGenerator.new()
 func _ready():
 	Fade_Out()
 	rng.randomize()
+	HealthController.connect("boss_dam", self, "do_damage")
 
 func take_damage():
 	HealthController.boss_hit()
@@ -164,5 +166,6 @@ func manne_destroyed():
 		is_visible = true
 		beginattack.start()
 
-
+func do_damage():
+	anim.play("Damage")
 
