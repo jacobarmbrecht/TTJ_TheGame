@@ -4,9 +4,10 @@ const PLAYER_HEALTH_MAX = 1000
 signal death
 signal player_dam
 
-const BOSS_HEALTH_MAX = 20
+const BOSS_HEALTH_MAX = 10
 signal boss_death
 signal boss_dam
+
 
 onready var player_health = PLAYER_HEALTH_MAX
 
@@ -31,3 +32,4 @@ func boss_hit():
 		emit_signal("boss_dam")
 	else:
 		emit_signal("boss_death")
+		

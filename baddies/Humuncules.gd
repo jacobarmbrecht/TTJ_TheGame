@@ -23,19 +23,19 @@ var is_visible = false
 var is_spooky = false
 var childrendestroyed = 0;
 
-
 var velocity = Vector2(0,0)
 var pos
 
 var rng = RandomNumberGenerator.new()
 
 
-
+const gibs = preload("res://baddies/Gibs.tscn")
 
 func _ready():
 	Fade_Out()
 	rng.randomize()
 	HealthController.connect("boss_dam", self, "do_damage")
+	HealthController.connect("boss_death", self, "do_death")
 
 func take_damage():
 	HealthController.boss_hit()
@@ -168,4 +168,10 @@ func manne_destroyed():
 
 func do_damage():
 	anim.play("Damage")
+	
+func do_death():
+	var gibs_instance = gibs.instance()
+	get_parent().add_child(gibs_instance)
+	gibs_instance.position = position
+	queue_free()
 

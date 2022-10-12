@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 const gibs = preload("res://baddies/Gibs.tscn")
 
+
 signal dead
 
 export (float) var speed = 100
@@ -9,6 +10,9 @@ export (float) var gravity = 300
 
 
 var movement = Vector2(0, 0)
+
+func _ready():
+	HealthController.connect("boss_death", self, "die")
 
 
 func _physics_process(_delta):

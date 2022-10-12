@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ttvg_ah.wav-731264ec1604009ec278733d4348f90d.sample"
+
+[deps]
+
+source_file="res://sounds/endgame/ttvg_ah.wav"
+dest_files=[ "res://.import/ttvg_ah.wav-731264ec1604009ec278733d4348f90d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

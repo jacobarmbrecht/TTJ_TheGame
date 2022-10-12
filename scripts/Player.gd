@@ -20,9 +20,11 @@ var is_attacking = false
 var is_jumping = false
 var attack_rate_done = true
 var is_dead = false
+var boss_dead = false
 
 func _ready():
 	HealthController.connect("death", self, "do_death")
+	HealthController.connect("boss_death", self, "boss_died")
 	HealthController.connect("player_dam", self, "do_damage")
 
 func _physics_process(delta):
@@ -37,7 +39,7 @@ func _physics_process(delta):
 
 
 	## "disable" inputs when the player is attacking
-	if !is_attacking and !is_dead:
+	if !is_attacking and !is_dead and !boss_dead:
 		if abs(velocity.x) < min_speed:
 			velocity.x = 0.0
 
@@ -104,6 +106,9 @@ func _physics_process(delta):
 	else: 
 		if is_dead:
 			velocity = velocity / 1.2 #fake friction
+		if boss_dead:
+			velocity = velocity / 1.1 #fake friction
+			state_machine.travel("Endgame")
 
 	velocity.y += gravity*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
@@ -141,5 +146,7 @@ func start(pos):
 	position = pos
 	show()
 
+func boss_died():
+	boss_dead = true
 
 #secret comment for the webhook
