@@ -1,0 +1,119 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://baddies/Gibs.gd" type="Script" id=1]
+[ext_resource path="res://art/spritesheets/ARW_2D_Flame_Sprite_Sheet_.png" type="Texture" id=2]
+[ext_resource path="res://art/sprites/enemies/godfly/godfly_gibbed.png" type="Texture" id=3]
+
+[sub_resource type="CapsuleShape2D" id=3]
+height = 26.0
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 8.97979
+height = 14.0334
+
+[sub_resource type="CanvasItemMaterial" id=1]
+particles_animation = true
+particles_anim_h_frames = 7
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.721429, 0.838636 ), -0.945454, -0.945454, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[node name="BossGibs" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Limbs" type="Node2D" parent="."]
+
+[node name="Head" type="RigidBody2D" parent="Limbs"]
+position = Vector2( 0, -18 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/Head"]
+position = Vector2( 3, 2 )
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Limbs/Head"]
+texture = ExtResource( 3 )
+hframes = 5
+
+[node name="ArmL" type="RigidBody2D" parent="Limbs"]
+position = Vector2( -11, -3 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/ArmL"]
+position = Vector2( -2, 2 )
+rotation = -1.5194
+shape = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="Limbs/ArmL"]
+texture = ExtResource( 3 )
+hframes = 5
+frame = 2
+
+[node name="ArmR" type="RigidBody2D" parent="Limbs"]
+position = Vector2( 17, -2 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/ArmR"]
+position = Vector2( -2, 2 )
+rotation = -1.5194
+shape = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="Limbs/ArmR"]
+texture = ExtResource( 3 )
+hframes = 5
+frame = 1
+
+[node name="LegL" type="RigidBody2D" parent="Limbs"]
+position = Vector2( 0, 19 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/LegL"]
+position = Vector2( -4, 1 )
+rotation = -3.12123
+shape = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="Limbs/LegL"]
+texture = ExtResource( 3 )
+hframes = 5
+frame = 4
+
+[node name="LegR" type="RigidBody2D" parent="Limbs"]
+position = Vector2( 7, 20 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/LegR"]
+position = Vector2( -4, 1 )
+rotation = -3.12123
+shape = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="Limbs/LegR"]
+texture = ExtResource( 3 )
+hframes = 5
+frame = 3
+
+[node name="Fire" type="CPUParticles2D" parent="."]
+material = SubResource( 1 )
+position = Vector2( 0, -18 )
+emitting = false
+amount = 14
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource( 2 )
+emission_shape = 1
+emission_sphere_radius = 10.0
+direction = Vector2( 0, -1 )
+spread = 60.0
+initial_velocity = 70.0
+scale_amount_random = 0.39
+scale_amount_curve = SubResource( 2 )
+anim_speed = 2.61
+anim_offset = 1.0
+anim_offset_random = 1.0

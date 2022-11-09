@@ -29,7 +29,7 @@ var pos
 var rng = RandomNumberGenerator.new()
 
 
-const gibs = preload("res://baddies/Gibs.tscn")
+const gibs = preload("res://baddies/BossGibs.tscn")
 
 func _ready():
 	Fade_Out()
