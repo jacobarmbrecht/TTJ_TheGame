@@ -24,7 +24,7 @@ var boss_dead = false
 
 func _ready():
 	HealthController.connect("death", self, "do_death")
-	HealthController.connect("boss_death", self, "boss_died")
+	#HealthController.connect("boss_death", self, "boss_died")
 	HealthController.connect("player_dam", self, "do_damage")
 
 func _physics_process(delta):
