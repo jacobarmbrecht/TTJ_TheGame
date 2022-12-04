@@ -4,7 +4,6 @@
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=2]
 [ext_resource path="res://shaders/wipe.shader" type="Shader" id=3]
 
-
 [sub_resource type="ShaderMaterial" id=1]
 
 [sub_resource type="ShaderMaterial" id=2]

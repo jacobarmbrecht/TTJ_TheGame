@@ -4,32 +4,32 @@
 [ext_resource path="res://baddies/Gibs.gd" type="Script" id=2]
 [ext_resource path="res://art/spritesheets/ARW_2D_Flame_Sprite_Sheet_.png" type="Texture" id=3]
 
-[sub_resource type="PhysicsMaterial" id=4]
+[sub_resource type="PhysicsMaterial" id=1]
 bounce = 0.44
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=2]
 radius = 6.0
 height = 10.0
 
-[sub_resource type="CapsuleShape2D" id=7]
+[sub_resource type="CapsuleShape2D" id=3]
 radius = 6.0
 height = 6.0
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=4]
 radius = 4.0
 height = 6.0
 
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="CapsuleShape2D" id=5]
 radius = 3.0
 height = 10.0
 
-[sub_resource type="CanvasItemMaterial" id=5]
+[sub_resource type="CanvasItemMaterial" id=6]
 particles_animation = true
 particles_anim_h_frames = 7
 particles_anim_v_frames = 1
 particles_anim_loop = true
 
-[sub_resource type="Curve" id=6]
+[sub_resource type="Curve" id=7]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.721429, 0.838636 ), -0.945454, -0.945454, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
 [node name="Gibs" type="Node2D"]
@@ -42,11 +42,11 @@ position = Vector2( -1, -19 )
 collision_layer = 0
 collision_mask = 2
 mass = 0.08
-physics_material_override = SubResource( 4 )
+physics_material_override = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/Head"]
 position = Vector2( 1, -2 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="Limbs/Head"]
 texture = ExtResource( 1 )
@@ -57,11 +57,11 @@ position = Vector2( 2, -3 )
 collision_layer = 0
 collision_mask = 2
 mass = 0.08
-physics_material_override = SubResource( 4 )
+physics_material_override = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/Torso"]
 position = Vector2( -2, -1 )
-shape = SubResource( 7 )
+shape = SubResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="Limbs/Torso"]
 texture = ExtResource( 1 )
@@ -73,10 +73,10 @@ position = Vector2( -9, -2 )
 collision_layer = 0
 collision_mask = 2
 mass = 0.08
-physics_material_override = SubResource( 4 )
+physics_material_override = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/LArm"]
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="Limbs/LArm"]
 texture = ExtResource( 1 )
@@ -88,10 +88,10 @@ position = Vector2( 6, -3 )
 collision_layer = 0
 collision_mask = 2
 mass = 0.08
-physics_material_override = SubResource( 4 )
+physics_material_override = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/RArm"]
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="Limbs/RArm"]
 texture = ExtResource( 1 )
@@ -103,11 +103,11 @@ position = Vector2( -7, 10 )
 collision_layer = 0
 collision_mask = 2
 mass = 0.08
-physics_material_override = SubResource( 4 )
+physics_material_override = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/LLeg"]
 position = Vector2( 2, -2 )
-shape = SubResource( 3 )
+shape = SubResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="Limbs/LLeg"]
 texture = ExtResource( 1 )
@@ -119,11 +119,11 @@ position = Vector2( 1, 9 )
 collision_layer = 0
 collision_mask = 2
 mass = 0.08
-physics_material_override = SubResource( 4 )
+physics_material_override = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Limbs/RLeg"]
 position = Vector2( 1, -1 )
-shape = SubResource( 3 )
+shape = SubResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="Limbs/RLeg"]
 texture = ExtResource( 1 )
@@ -131,7 +131,7 @@ hframes = 6
 frame = 3
 
 [node name="Fire" type="CPUParticles2D" parent="."]
-material = SubResource( 5 )
+material = SubResource( 6 )
 position = Vector2( 0, -18 )
 emitting = false
 amount = 14
@@ -145,7 +145,7 @@ direction = Vector2( 0, -1 )
 spread = 60.0
 initial_velocity = 70.0
 scale_amount_random = 0.39
-scale_amount_curve = SubResource( 6 )
+scale_amount_curve = SubResource( 7 )
 anim_speed = 2.61
 anim_offset = 1.0
 anim_offset_random = 1.0
