@@ -7,6 +7,11 @@ var endsong = preload("res://sounds/endgame/ttvg_ah.wav")
 onready var tilemap = $HiddenDoor
 onready var camera = $Player/Camera2D
 onready var endzone = $Endzone
+onready var ngbutton = $NewGame
+onready var mbutton = $MainMenu
+
+onready var main_scene = load("res://scenes//Main.tscn")
+onready var title_scene = load("res://scenes//TitleScreen.tscn")
 signal onstage
 
 export(PackedScene) var mob_scene
@@ -23,6 +28,8 @@ func _ready():
 	#endzone.connect("body_shape_entered", self, "game_over")
 	get_node("Player/Body/Sprite/Attacks/Guitar").connect("destroyed", get_node("Humuncules"), "manne_destroyed")
 	camera.limit_right = 1300
+	ngbutton.hide()
+	mbutton.hide()
 
 func _process(delta):
 	if!audioplayer.is_playing() and !boss_died:
@@ -34,6 +41,7 @@ func game_over():
 	emit_signal("onstage")
 	audioplayer.stream = endsong
 	audioplayer.play()
+	$ButtonTimer.start()
 	
 func new_game():
 	score = 0
@@ -74,3 +82,16 @@ func player_dead():
 
 func _on_Area2D_body_entered(body):
 	game_over()
+
+
+func _on_NGButton_button_up():
+	get_tree().change_scene_to(main_scene)
+
+
+func _on_MButton_button_up():
+	get_tree().change_scene_to(title_scene)
+
+
+func _on_ButtonTimer_timeout():
+		ngbutton.show()
+		mbutton.show()

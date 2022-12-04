@@ -77,6 +77,28 @@ extents = Vector2( 56, 80 )
 script = ExtResource( 3 )
 mob_scene = ExtResource( 5 )
 
+[node name="NewGame" type="Node2D" parent="."]
+position = Vector2( 1728, 320 )
+
+[node name="NGButton" type="Button" parent="NewGame"]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "New Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenu" type="Node2D" parent="."]
+position = Vector2( 1728, 360 )
+
+[node name="MButton" type="Button" parent="MainMenu"]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Main Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Player" parent="." instance=ExtResource( 6 )]
 position = Vector2( 189, 504 )
 collision_mask = 1026
@@ -138,6 +160,7 @@ wait_time = 3.0
 [node name="Menu" parent="CanvasLayer" instance=ExtResource( 7 )]
 margin_left = 32.0
 margin_right = 32.0
+mouse_filter = 2
 
 [node name="Humuncules" parent="." instance=ExtResource( 8 )]
 playerNodePath = NodePath("../Player")
@@ -158,8 +181,15 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Endzone/Area2D"]
 shape = SubResource( 7 )
 
+[node name="ButtonTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="onstage" from="." to="Player" method="boss_died"]
+[connection signal="button_up" from="NewGame/NGButton" to="." method="_on_NGButton_button_up"]
+[connection signal="button_up" from="MainMenu/MButton" to="." method="_on_MButton_button_up"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_MobTimer_timeout"]
 [connection signal="body_entered" from="Endzone/Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="ButtonTimer" to="." method="_on_ButtonTimer_timeout"]
 
 [editable path="Player"]
