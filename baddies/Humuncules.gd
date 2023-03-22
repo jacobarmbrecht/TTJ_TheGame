@@ -161,6 +161,7 @@ func EndAttack():
 
 func manne_destroyed():
 	childrendestroyed += 1;
+	KillstreakController.kill()
 	print(childrendestroyed)
 	if(childrendestroyed > threshold):
 		is_visible = true

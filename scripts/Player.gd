@@ -122,7 +122,7 @@ func do_point():
 	#anim_tree["parameters/Point/active"] = 1
 
 func handle_taunt():
-	print("Fuck you")
+	print("Frick you")
 
 func do_jump():
 	state_machine.travel("Jump")
@@ -148,9 +148,6 @@ func start(pos):
 
 func boss_died():
 	boss_dead = true
-
-#SUPER secret comment for the webhook
-
 
 func _on_Main_onstage():
 	boss_dead = true
