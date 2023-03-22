@@ -1,34 +1,39 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/TitleScreen.gd" type="Script" id=1]
+[ext_resource path="res://art/images/buttons/playgame.png" type="Texture" id=2]
+[ext_resource path="res://art/images/buttons/dontplaygame.png" type="Texture" id=3]
+[ext_resource path="res://art/images/buttons/playgame_pressed.png" type="Texture" id=4]
+[ext_resource path="res://art/images/buttons/dontplaygame_pressed.png" type="Texture" id=5]
+[ext_resource path="res://art/images/buttons/dontplaygame_hover.png" type="Texture" id=6]
+[ext_resource path="res://art/images/buttons/playgame_hover.png" type="Texture" id=7]
 
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="NewGame" type="Node2D" parent="."]
-position = Vector2( 512, 128 )
+position = Vector2( 240, 120 )
+scale = Vector2( 0.5, 0.5 )
 
-[node name="NewGameButton" type="Button" parent="NewGame"]
-margin_left = -128.0
-margin_top = 88.0
-margin_right = 128.0
-margin_bottom = 128.0
-text = "New Game"
+[node name="NewTextButton" type="TextureButton" parent="NewGame"]
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Options" type="Node2D" parent="."]
-position = Vector2( 384, 384 )
+position = Vector2( 248, 288 )
+scale = Vector2( 0.5, 0.5 )
 
-[node name="OptionsButton" type="Button" parent="Options"]
-margin_top = -112.0
-margin_right = 256.0
-margin_bottom = -72.0
-text = "Options"
+[node name="OptTextButton" type="TextureButton" parent="Options"]
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="button_up" from="NewGame/NewGameButton" to="." method="_on_NewGameButton_button_up"]
-[connection signal="button_up" from="Options/OptionsButton" to="." method="_on_OptionsButton_button_up"]
+[connection signal="button_up" from="NewGame/NewTextButton" to="." method="_on_NewTextButton_button_up"]
+[connection signal="button_up" from="Options/OptTextButton" to="." method="_on_OptTextButton_button_up"]

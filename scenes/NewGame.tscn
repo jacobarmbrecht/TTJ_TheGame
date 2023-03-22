@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://art/images/buttons/playgame_pressed.png" type="Texture" id=1]
+[ext_resource path="res://art/images/buttons/playgame_hover.png" type="Texture" id=2]
+[ext_resource path="res://art/images/buttons/playgame.png" type="Texture" id=3]
+
+[node name="NewGame" type="Node2D"]
+position = Vector2( 512, 128 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="NewGameButton" type="Button" parent="."]
+visible = false
+margin_left = -128.0
+margin_top = 88.0
+margin_right = 128.0
+margin_bottom = 128.0
+text = "New Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewTextButton" type="TextureButton" parent="."]
+margin_left = -544.0
+margin_right = 2008.0
+margin_bottom = 2512.0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 1 )
+texture_hover = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

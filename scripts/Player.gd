@@ -150,3 +150,9 @@ func boss_died():
 	boss_dead = true
 
 #SUPER secret comment for the webhook
+
+
+func _on_Main_onstage():
+	boss_dead = true
+	
+

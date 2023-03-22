@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/DIUACIL FRONT ORANGE RED-nes4f.png-861e4c754311695a4395b2a0bfc46ded.stex"
+path="res://.import/2001.png-c13d1e1d34ee88ad27dd7d4d27ea19f6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/images/DIUACIL FRONT ORANGE RED-nes4f.png"
-dest_files=[ "res://.import/DIUACIL FRONT ORANGE RED-nes4f.png-861e4c754311695a4395b2a0bfc46ded.stex" ]
+source_file="res://art/images/2001.png"
+dest_files=[ "res://.import/2001.png-c13d1e1d34ee88ad27dd7d4d27ea19f6.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

@@ -16,6 +16,7 @@ onready var boss_health = BOSS_HEALTH_MAX
 func _ready():
 	boss_health = BOSS_HEALTH_MAX
 	player_health = PLAYER_HEALTH_MAX
+	
 
 func get_player_health():
 	return inverse_lerp(0, PLAYER_HEALTH_MAX, player_health)
@@ -26,6 +27,7 @@ func player_hit():
 		emit_signal("player_dam")
 	else:
 		emit_signal("death")
+		
 
 func get_boss_health():
 	return inverse_lerp(0, BOSS_HEALTH_MAX, boss_health)
@@ -38,3 +40,6 @@ func boss_hit():
 		emit_signal("boss_death")
 		boss_health = BOSS_HEALTH_MAX
 		
+func restart_game():
+	boss_health = BOSS_HEALTH_MAX
+	player_health = PLAYER_HEALTH_MAX

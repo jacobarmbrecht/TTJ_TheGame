@@ -16,3 +16,11 @@ func _on_NewGameButton_button_up():
 
 func _on_OptionsButton_button_up():
 	get_tree().change_scene_to(title_scene)
+
+
+func _on_NewTextButton_pressed():
+	get_tree().change_scene_to(main_scene)
+
+
+func _on_OptTextButton_pressed():
+	get_tree().change_scene_to(title_scene)
