@@ -16,6 +16,10 @@ onready var attacktimer = $AttackEnd
 onready var delaytimer = $AttackDelay
 onready var beginattack = $AttackTimer
 
+onready var audioplayer = $AudioStreamPlayer 
+var oof = preload("res://sounds/soundfx/mannedead.wav")
+
+
 var is_dead = false
 var is_attacking = false
 var is_moving = false
@@ -36,6 +40,7 @@ func _ready():
 	rng.randomize()
 	HealthController.connect("boss_dam", self, "do_damage")
 	HealthController.connect("boss_death", self, "do_death")
+	audioplayer.stream = oof #OOF
 
 func take_damage():
 	HealthController.boss_hit()
@@ -160,6 +165,10 @@ func EndAttack():
 	beginattack.start()
 
 func manne_destroyed():
+	var rand = rng.randf_range(0,2)
+	audioplayer.pitch_scale = rand
+	audioplayer.play()
+	
 	childrendestroyed += 1;
 	print(childrendestroyed)
 	if(childrendestroyed > threshold):

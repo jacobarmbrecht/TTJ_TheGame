@@ -195,6 +195,9 @@ one_shot = true
 wait_time = 2.4
 one_shot = true
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = "SoundFX"
+
 [connection signal="timeout" from="AttackTimer" to="." method="AttackTime"]
 [connection signal="timeout" from="SpookyTimer" to="." method="SpookyTime"]
 [connection signal="timeout" from="ITSSPOOKYTIME" to="." method="SpookyTimeOver"]

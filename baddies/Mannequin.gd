@@ -4,6 +4,9 @@ const gibs = preload("res://baddies/Gibs.tscn")
 
 signal dead
 
+#onready var audioplayer = /root/
+#var oof = preload("res://sounds/soundfx/mannedead.wav")
+
 export (float) var speed = 100
 export (float) var gravity = 300
 var rng = RandomNumberGenerator.new()
@@ -13,6 +16,7 @@ var movement = Vector2(0, 0)
 func _ready():
 	HealthController.connect("boss_death", self, "uhoh")
 	rng.randomize()
+	#audioplayer.stream = oof #OOF
 
 
 func _physics_process(_delta):
@@ -32,13 +36,21 @@ func _physics_process(_delta):
 
 
 func die():
+	emit_signal("dead")
+	#var rand = rng.randf_range(0,2)
+	#audioplayer.pitch_scale = rand
+	#audioplayer.play()
 	var gibs_instance = gibs.instance()
 	get_parent().add_child(gibs_instance)
 	gibs_instance.position = position
-	queue_free()
+	queue_free() #allow sound to end before destroying object
+
 	
 func uhoh(): #randomized death
 	
 	var rand = rng.randf_range(0,2)
+	#audioplayer.voice_set_pitch_scale(0, rand)
 	yield(get_tree().create_timer(rand), "timeout")
 	die()
+
+

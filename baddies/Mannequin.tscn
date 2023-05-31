@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://art/sprites/enemies/mannequins/manne_basic.png" type="Texture" id=1]
 [ext_resource path="res://baddies/Mannequin.gd" type="Script" id=2]
+[ext_resource path="res://sounds/soundfx/mannedead.wav" type="AudioStream" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 11.0
@@ -40,4 +41,9 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource( 2 )
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+bus = "SoundFX"
+
 [connection signal="dead" from="." to="." method="dead_mob"]
+[connection signal="finished" from="AudioStreamPlayer" to="." method="soundover"]

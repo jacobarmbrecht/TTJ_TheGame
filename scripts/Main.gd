@@ -1,8 +1,9 @@
 extends Node2D
 
 onready var audioplayer = $AudioStreamPlayer
-var song = preload("res://sounds/ttjvg_monday.wav")
+var song = preload("res://sounds/songs/ttjvg_monday.wav")
 var endsong = preload("res://sounds/endgame/ttvg_ah.wav")
+#var oof = preload("res://sounds/soundfx/explosion(3).wav")
 
 onready var tilemap = $HiddenDoor
 onready var camera = $Player/Camera2D
@@ -32,6 +33,7 @@ func _ready():
 	HealthController.connect("boss_death", self, "boss_died")
 	#endzone.connect("body_shape_entered", self, "game_over")
 	get_node("Player/Body/Sprite/Attacks/Guitar").connect("destroyed", get_node("Humuncules"), "manne_destroyed")
+	
 	camera.limit_right = 1300
 	ngbutton.hide()
 	mbutton.hide()

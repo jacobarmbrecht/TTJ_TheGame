@@ -209,6 +209,8 @@ tile_data = PoolIntArray( -65560, 0, 0, -65559, 0, 0, -65558, 0, 0, -65557, 0, 0
 "baddies",
 ]]
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Baddies"]
+
 [node name="MobSpawnLocation" type="Node2D" parent="."]
 position = Vector2( 160, -144 )
 script = ExtResource( 4 )
@@ -230,6 +232,7 @@ mouse_filter = 2
 playerNodePath = NodePath("../Player")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = "Music"
 
 [node name="AlbumCover" parent="." instance=ExtResource( 10 )]
 position = Vector2( 2112, 184 )
