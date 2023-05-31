@@ -5,9 +5,11 @@ onready var attacks = $Body/Sprite/Attacks
 onready var state_machine = $AnimationPlayer/AnimationTree.get("parameters/playback")
 onready var anim = $AnimationPlayer
 
+signal special_attack
+signal refresh_pickup
 
 export var speed : int = 5 ## Player speed
-export var jumpForce : int = 500
+export var jumpForce : int = 450
 export var gravity : int = 800
 export var damp : float = 0.9
 export var friction : float = 100.0
@@ -19,13 +21,18 @@ var velocity = Vector2.ZERO  ## The player's movement vector.
 var is_attacking = false
 var is_jumping = false
 var attack_rate_done = true
+var can_special = false
 var is_dead = false
 var boss_dead = false
+
+var pickups = 0
 
 func _ready():
 	HealthController.connect("death", self, "do_death")
 	#HealthController.connect("boss_death", self, "boss_died")
 	HealthController.connect("player_dam", self, "do_damage")
+	
+	pickups = 0
 
 func _physics_process(delta):
 
@@ -72,8 +79,9 @@ func _physics_process(delta):
 			else:
 				attack_pressed = true
 		elif Input.is_action_pressed("special"):
-			velocity.x = 0
-			special_pressed = true
+			if can_special:
+				velocity.x = 0
+				special_pressed = true
 		elif Input.is_action_pressed("taunt"):
 			velocity.x = 0
 			taunt_pressed = true
@@ -93,10 +101,14 @@ func _physics_process(delta):
 			attack_rate_done = false
 			$AttackRate.start()
 		elif special_pressed and attack_rate_done:
+			do_special()
 			is_attacking = true
 			$SpecialTimer.start()
 			attack_rate_done = false
 			$AttackRate.start()
+			can_special = false
+			pickups = 0
+			emit_signal("special_attack")
 		elif taunt_pressed and attack_rate_done:
 			do_point()
 			is_attacking = true
@@ -116,6 +128,8 @@ func _physics_process(delta):
 func do_attack():
 	state_machine.travel("Attack")
 	#anim_tree["parameters/Attack/active"] = 1
+func do_special():
+	state_machine.travel("Special")
 
 func do_point():
 	state_machine.travel("Point")
@@ -155,4 +169,12 @@ func boss_died():
 func _on_Main_onstage():
 	boss_dead = true
 	
+
+
+
+func _on_Pickup_picked_up():
+	print("player picked up")
+	pickups += 1
+	if pickups > 9:
+		can_special = true
 

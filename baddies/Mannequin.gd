@@ -2,17 +2,17 @@ extends KinematicBody2D
 
 const gibs = preload("res://baddies/Gibs.tscn")
 
-
 signal dead
 
 export (float) var speed = 100
 export (float) var gravity = 300
-
+var rng = RandomNumberGenerator.new()
 
 var movement = Vector2(0, 0)
 
 func _ready():
-	HealthController.connect("boss_death", self, "die")
+	HealthController.connect("boss_death", self, "uhoh")
+	rng.randomize()
 
 
 func _physics_process(_delta):
@@ -36,4 +36,9 @@ func die():
 	get_parent().add_child(gibs_instance)
 	gibs_instance.position = position
 	queue_free()
-
+	
+func uhoh(): #randomized death
+	
+	var rand = rng.randf_range(0,2)
+	yield(get_tree().create_timer(rand), "timeout")
+	die()

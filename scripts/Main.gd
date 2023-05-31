@@ -11,6 +11,7 @@ onready var endzone = $Endzone
 onready var ngbutton = $NewGame
 onready var mbutton = $MainMenu
 onready var retrybutton = $Retry
+onready var boss = $Humuncules
 onready var healthcontroller = $"/root/HealthController"
 onready var main_scene = load("res://scenes//Main.tscn")
 onready var title_scene = load("res://scenes//TitleScreen.tscn")
@@ -62,6 +63,7 @@ func _on_MobTimer_timeout():
 	#
 	mob.position = mob_spawn_location.position
 	add_child(mob)
+	mob.add_to_group("baddies")
 	
 
 func boss_died():
@@ -76,7 +78,7 @@ func boss_died():
 
 func dead_mob():
 	score+=1
-	print(score)
+	#print(score)
 	
 
 func player_dead():
@@ -93,17 +95,6 @@ func _on_Area2D_body_entered(body):
 	game_over()
 
 
-func _on_NGButton_button_up():
-	healthcontroller.restart_game()
-	player_died = false
-	boss_died = false
-	get_tree().change_scene_to(main_scene)
-
-
-func _on_MButton_button_up():
-	get_tree().change_scene_to(title_scene)
-
-
 func _on_ButtonTimer_timeout():
 		ngbutton.show()
 		mbutton.show()
@@ -111,6 +102,7 @@ func _on_ButtonTimer_timeout():
 
 
 func _on_MenuTextButton_button_up():
+	healthcontroller.restart_game()
 	get_tree().change_scene_to(title_scene)
 
 
@@ -127,3 +119,12 @@ func _on_NewTextButton_button_up():
 	player_died = false
 	boss_died = false
 	get_tree().change_scene_to(main_scene)
+
+
+func _on_Player_special_attack():
+	var badguys = get_tree().get_nodes_in_group("baddies")
+	var num_badguys = badguys.size()
+	for N in num_badguys:
+		dead_mob()
+		boss.manne_destroyed()
+	get_tree().call_group("baddies", "uhoh")
