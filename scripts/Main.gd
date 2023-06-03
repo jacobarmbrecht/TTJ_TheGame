@@ -1,9 +1,12 @@
 extends Node2D
 
 onready var audioplayer = $AudioStreamPlayer
-var song = preload("res://sounds/songs/ttjvg_monday.wav")
+var s_mon = preload("res://sounds/songs/TTJVG_MONDAY.wav")
+var s_buf = preload("res://sounds/songs/TTJVG_BUFFALO.wav")
 var endsong = preload("res://sounds/endgame/ttvg_ah.wav")
+var deth = preload("res://sounds/soundfx/benjsounds/h/hdd1.wav")
 #var oof = preload("res://sounds/soundfx/explosion(3).wav")
+var song = [s_mon, s_buf]
 
 onready var tilemap = $HiddenDoor
 onready var camera = $Player/Camera2D
@@ -26,7 +29,7 @@ var score
 var rng = RandomNumberGenerator.new()
 
 func _ready():
-	randomize()
+	rng.randomize()
 	$MobTimer.start()
 	score = 0
 	HealthController.connect("death", self, "player_dead")
@@ -41,7 +44,8 @@ func _ready():
 
 func _process(delta):
 	if!audioplayer.is_playing() and !boss_died:
-		audioplayer.stream = song
+		var rand = rng.randi_range(0,song.size()-1)
+		audioplayer.stream = song[rand]
 		audioplayer.play()
 	
 func game_over():
@@ -76,6 +80,8 @@ func boss_died():
 	tilemap.queue_free()
 	camera.limit_right = 10000000
 	audioplayer.stop()
+	audioplayer.stream = deth
+	audioplayer.play()
 	#game_over()
 
 func dead_mob():

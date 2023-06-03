@@ -371,6 +371,8 @@ wait_time = 2.0
 [node name="AttackRate" type="Timer" parent="."]
 wait_time = 0.8
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
 [connection signal="timeout" from="AttackTimer" to="." method="end_attack"]
 [connection signal="timeout" from="SpecialTimer" to="." method="end_attack"]
 [connection signal="timeout" from="TauntTimer" to="." method="end_attack"]

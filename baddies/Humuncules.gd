@@ -52,6 +52,7 @@ var is_dead = false
 var is_attacking = false
 var is_moving = false
 var is_visible = false
+var appeared = false
 var is_spooky = false
 var childrendestroyed = 0;
 
@@ -203,11 +204,13 @@ func manne_destroyed():
 	print(childrendestroyed)
 	if(childrendestroyed > threshold):
 		is_visible = true
-		rand = rng.randi_range(0,2)
-		audioplayer.stream = humsounds[rand]
-		audioplayer.pitch_scale = 1
-		audioplayer.play()
-		beginattack.start()
+		if(!appeared):
+			rand = rng.randi_range(0,2)
+			audioplayer.stream = humsounds[rand]
+			audioplayer.pitch_scale = 1
+			audioplayer.play()
+			beginattack.start()
+			appeared = true
 
 func do_damage():
 	var rand = rng.randf_range(0.8,1.2)

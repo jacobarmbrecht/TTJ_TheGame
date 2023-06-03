@@ -169,7 +169,7 @@ max_walk_speed = 85.0
 
 [node name="Sprite" parent="Player/Body" index="0"]
 material = SubResource( 1 )
-frame = 1
+frame = 0
 
 [node name="AnimationTree" parent="Player/AnimationPlayer" index="0"]
 parameters/playback = SubResource( 2 )

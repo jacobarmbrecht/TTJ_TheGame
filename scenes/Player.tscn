@@ -3,7 +3,7 @@
 [ext_resource path="res://art/spritesheets/Benj Sheet.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=1]
 resource_name = "idle"
 length = 2.0
 
@@ -18,7 +18,7 @@ script = ExtResource( 2 )
 jumpForce = 465
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/idle = SubResource( 4 )
+anims/idle = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -44,6 +44,9 @@ one_shot = true
 
 [node name="AttackRate" type="Timer" parent="."]
 one_shot = true
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+bus = "SoundFX"
 
 [connection signal="timeout" from="AttackTimer" to="." method="end_attack"]
 [connection signal="timeout" from="SpecialTimer" to="." method="end_attack"]

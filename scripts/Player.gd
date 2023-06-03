@@ -4,6 +4,23 @@ onready var anim_tree = $AnimationPlayer/AnimationTree
 onready var attacks = $Body/Sprite/Attacks
 onready var state_machine = $AnimationPlayer/AnimationTree.get("parameters/playback")
 onready var anim = $AnimationPlayer
+onready var audioplayer = $AudioStreamPlayer
+
+var fxpowerup = preload("res://sounds/soundfx/powerUp.wav")
+
+var dam1 = preload("res://sounds/soundfx/benjsounds/p/pd1.wav")
+var dam2 = preload("res://sounds/soundfx/benjsounds/p/pd2.wav")
+var dam3 = preload("res://sounds/soundfx/benjsounds/p/pd3.wav")
+var dam4 = preload("res://sounds/soundfx/benjsounds/p/pd4.wav")
+var dam5 = preload("res://sounds/soundfx/benjsounds/p/pd5.wav")
+var dam6 = preload("res://sounds/soundfx/benjsounds/p/pd6.wav")
+var dam7 = preload("res://sounds/soundfx/benjsounds/p/pd7.wav")
+var dam8 = preload("res://sounds/soundfx/benjsounds/p/pd8.wav")
+var ded1 = preload("res://sounds/soundfx/benjsounds/p/pdd1.wav")
+var ded2 = preload("res://sounds/soundfx/benjsounds/p/pdd2.wav")
+
+var damaged = [dam1, dam2, dam3, dam4, dam5, dam6, dam7, dam8]
+var ded = [ded1, ded2]
 
 signal special_attack
 signal refresh_pickup
@@ -27,11 +44,14 @@ var boss_dead = false
 
 var pickups = 0
 
+var rng = RandomNumberGenerator.new()
+var rand
+
 func _ready():
+	rng.randomize()
 	HealthController.connect("death", self, "do_death")
 	#HealthController.connect("boss_death", self, "boss_died")
 	HealthController.connect("player_dam", self, "do_damage")
-	
 	pickups = 0
 
 func _physics_process(delta):
@@ -143,10 +163,19 @@ func do_jump():
 
 func do_death():
 	state_machine.travel("Death")
+	if(!is_dead):
+		rand = rng.randi_range(0,1)
+		audioplayer.stream = ded[rand]
+		audioplayer.play()
 	is_dead = true
+	
 	
 func do_damage():
 	anim.play("Damage")
+	if(!audioplayer.is_playing()):
+		rand = rng.randi_range(0,7)
+		audioplayer.stream = damaged[rand]
+		audioplayer.play()
 ## Timer destination for ending the attack animations
 ## XXX: Do we still need this?
 func end_attack():
@@ -173,6 +202,8 @@ func _on_Main_onstage():
 
 
 func _on_Pickup_picked_up():
+	audioplayer.stream = fxpowerup
+	audioplayer.play()
 	print("player picked up")
 	pickups += 1
 	if pickups > 9:

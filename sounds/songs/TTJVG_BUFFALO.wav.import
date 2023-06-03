@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/TTJVG_BUFFALO.wav-21c5fefb8525b2df7b904e4e7305b374.sample"
+
+[deps]
+
+source_file="res://sounds/songs/TTJVG_BUFFALO.wav"
+dest_files=[ "res://.import/TTJVG_BUFFALO.wav-21c5fefb8525b2df7b904e4e7305b374.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

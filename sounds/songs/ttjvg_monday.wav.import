@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/ttjvg_monday.wav-d7679ea8becaabc4032ec7786c4533fa.sample"
+path="res://.import/TTJVG_MONDAY.wav-9995dbcd1870596bae29c4a3361abe4c.sample"
 
 [deps]
 
-source_file="res://sounds/songs/ttjvg_monday.wav"
-dest_files=[ "res://.import/ttjvg_monday.wav-d7679ea8becaabc4032ec7786c4533fa.sample" ]
+source_file="res://sounds/songs/TTJVG_MONDAY.wav"
+dest_files=[ "res://.import/TTJVG_MONDAY.wav-9995dbcd1870596bae29c4a3361abe4c.sample" ]
 
 [params]
 
