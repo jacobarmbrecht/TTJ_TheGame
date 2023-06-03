@@ -16,9 +16,37 @@ onready var attacktimer = $AttackEnd
 onready var delaytimer = $AttackDelay
 onready var beginattack = $AttackTimer
 
+#audio player variables
 onready var audioplayer = $AudioStreamPlayer 
-var oof = preload("res://sounds/soundfx/mannedead.wav")
 
+#humuncules
+var an1 = preload("res://sounds/soundfx/benjsounds/h/ha1.wav")
+var an2 = preload("res://sounds/soundfx/benjsounds/h/ha2.wav")
+var an3 = preload("res://sounds/soundfx/benjsounds/h/ha3.wav")
+var dam1 = preload("res://sounds/soundfx/benjsounds/h/hd1.wav")
+var dam2 = preload("res://sounds/soundfx/benjsounds/h/hd2.wav")
+var dam3 = preload("res://sounds/soundfx/benjsounds/h/hd3.wav")
+var dam4 = preload("res://sounds/soundfx/benjsounds/h/hd4.wav")
+var dam5 = preload("res://sounds/soundfx/benjsounds/h/hd5.wav")
+var dam6 = preload("res://sounds/soundfx/benjsounds/h/hd6.wav")
+var deth1 = preload("res://sounds/soundfx/benjsounds/h/hdd1.wav")
+var deth2 = preload("res://sounds/soundfx/benjsounds/h/hdd2.wav")
+var humsounds = [an1, an2, dam4, dam5, dam6]
+
+#mannequin sounds
+var mdam1 = preload("res://sounds/soundfx/benjsounds/m/md1.wav")
+var mdam2 = preload("res://sounds/soundfx/benjsounds/m/md2.wav")
+var mdam3 = preload("res://sounds/soundfx/benjsounds/m/md3.wav")
+var mdam4 = preload("res://sounds/soundfx/benjsounds/m/md4.wav")
+var mdam5 = preload("res://sounds/soundfx/benjsounds/m/md5.wav")
+var mdam6 = preload("res://sounds/soundfx/benjsounds/m/md6.wav")
+var mdam7 = preload("res://sounds/soundfx/benjsounds/m/md7.wav")
+var mdam8 = preload("res://sounds/soundfx/benjsounds/m/md8.wav")
+var mdam9 = preload("res://sounds/soundfx/benjsounds/m/md9.wav")
+var mdam10 = preload("res://sounds/soundfx/benjsounds/m/md10.wav")
+var mansounds = [mdam1, mdam2, mdam3, mdam4, mdam5, mdam6, mdam7, mdam8, mdam9, mdam10, dam1, dam2, dam3]
+
+var oof = preload("res://sounds/soundfx/explosion(1).wav")
 
 var is_dead = false
 var is_attacking = false
@@ -40,7 +68,7 @@ func _ready():
 	rng.randomize()
 	HealthController.connect("boss_dam", self, "do_damage")
 	HealthController.connect("boss_death", self, "do_death")
-	audioplayer.stream = oof #OOF
+	#audioplayer.stream = oof #OOF
 
 func take_damage():
 	HealthController.boss_hit()
@@ -165,17 +193,28 @@ func EndAttack():
 	beginattack.start()
 
 func manne_destroyed():
-	var rand = rng.randf_range(0,2)
-	audioplayer.pitch_scale = rand
-	audioplayer.play()
 	
+	var rand = rng.randf_range(0.5,1.5)
+	audioplayer.pitch_scale = rand
+	rand = rng.randi_range(0,12)
+	audioplayer.stream = mansounds[rand]
+	audioplayer.play()
 	childrendestroyed += 1;
 	print(childrendestroyed)
 	if(childrendestroyed > threshold):
 		is_visible = true
+		rand = rng.randi_range(0,2)
+		audioplayer.stream = humsounds[rand]
+		audioplayer.pitch_scale = 1
+		audioplayer.play()
 		beginattack.start()
 
 func do_damage():
+	var rand = rng.randf_range(0.8,1.2)
+	audioplayer.pitch_scale = rand
+	rand = rng.randi_range(2,4)
+	audioplayer.stream = humsounds[rand]
+	audioplayer.play()
 	anim.play("Damage")
 	
 func do_death():

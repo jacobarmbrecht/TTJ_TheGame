@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/md1.wav-39914a7eacfa7f12e4b21afd0eaae452.sample"
+
+[deps]
+
+source_file="res://sounds/soundfx/benjsounds/m/md1.wav"
+dest_files=[ "res://.import/md1.wav-39914a7eacfa7f12e4b21afd0eaae452.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

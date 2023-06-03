@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/pd4.wav-486498310624313bd2989195d3553a8b.sample"
+
+[deps]
+
+source_file="res://sounds/soundfx/benjsounds/p/pd4.wav"
+dest_files=[ "res://.import/pd4.wav-486498310624313bd2989195d3553a8b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

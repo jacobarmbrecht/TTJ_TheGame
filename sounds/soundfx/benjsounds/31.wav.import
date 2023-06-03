@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/31.wav-8ef2f907766d70d53c03b0fdae4e4daa.sample"
+
+[deps]
+
+source_file="res://sounds/soundfx/benjsounds/31.wav"
+dest_files=[ "res://.import/31.wav-8ef2f907766d70d53c03b0fdae4e4daa.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
