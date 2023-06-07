@@ -141,9 +141,10 @@ radius = 15.0
 
 [node name="Humuncules" type="KinematicBody2D"]
 collision_layer = 16
-collision_mask = 0
+collision_mask = 2
 script = ExtResource( 2 )
 pos_offset = Vector2( 96, -64 )
+threshold = 50
 
 [node name="Body" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -153,6 +154,7 @@ material = SubResource( 2 )
 texture = ExtResource( 1 )
 hframes = 2
 vframes = 2
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
@@ -171,7 +173,7 @@ parameters/playback = SubResource( 19 )
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 16
-collision_mask = 12
+collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource( 20 )
@@ -181,11 +183,11 @@ wait_time = 6.0
 one_shot = true
 
 [node name="SpookyTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 20.0
 autostart = true
 
 [node name="ITSSPOOKYTIME" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 1.5
 one_shot = true
 
 [node name="AttackEnd" type="Timer" parent="."]
@@ -195,8 +197,15 @@ one_shot = true
 wait_time = 2.4
 one_shot = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-bus = "SoundFX"
+[node name="HumAudio" type="AudioStreamPlayer" parent="."]
+bus = "HumFX"
+
+[node name="ManAudio" type="AudioStreamPlayer" parent="."]
+bus = "ManAudio"
+
+[node name="GameAudio" type="AudioStreamPlayer" parent="."]
+volume_db = -3.059
+bus = "HumFX"
 
 [connection signal="timeout" from="AttackTimer" to="." method="AttackTime"]
 [connection signal="timeout" from="SpookyTimer" to="." method="SpookyTime"]

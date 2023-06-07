@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/p5.wav-f53899832d57b37a67f1f13c53986ef6.sample"
+
+[deps]
+
+source_file="res://sounds/soundfx/benjsounds/p/p5.wav"
+dest_files=[ "res://.import/p5.wav-f53899832d57b37a67f1f13c53986ef6.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

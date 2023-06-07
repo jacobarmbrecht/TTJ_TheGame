@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 export (NodePath) var playerNodePath
 export var pos_offset = Vector2(50,25)
+export var attack_offset = Vector2(50,25)
+export var spooky_offset = Vector2(60,30)
 export var speed = 2
 export var threshold = 5
 
@@ -15,23 +17,28 @@ onready var spookytimer = $ITSSPOOKYTIME
 onready var attacktimer = $AttackEnd
 onready var delaytimer = $AttackDelay
 onready var beginattack = $AttackTimer
+onready var healthcontroller = $"/root/HealthController"
+
 
 #audio player variables
-onready var audioplayer = $AudioStreamPlayer 
+onready var humaudioplayer = $HumAudio
+onready var manaudioplayer = $ManAudio 
+onready var gameaudioplayer = $GameAudio
 
 #humuncules
 var an1 = preload("res://sounds/soundfx/benjsounds/h/ha1.wav")
 var an2 = preload("res://sounds/soundfx/benjsounds/h/ha2.wav")
 var an3 = preload("res://sounds/soundfx/benjsounds/h/ha3.wav")
-var dam1 = preload("res://sounds/soundfx/benjsounds/h/hd1.wav")
-var dam2 = preload("res://sounds/soundfx/benjsounds/h/hd2.wav")
-var dam3 = preload("res://sounds/soundfx/benjsounds/h/hd3.wav")
-var dam4 = preload("res://sounds/soundfx/benjsounds/h/hd4.wav")
-var dam5 = preload("res://sounds/soundfx/benjsounds/h/hd5.wav")
-var dam6 = preload("res://sounds/soundfx/benjsounds/h/hd6.wav")
-var deth1 = preload("res://sounds/soundfx/benjsounds/h/hdd1.wav")
-var deth2 = preload("res://sounds/soundfx/benjsounds/h/hdd2.wav")
-var humsounds = [an1, an2, dam4, dam5, dam6]
+var dam1 = preload("res://sounds/soundfx/benjsounds/h/h1.wav")
+var dam2 = preload("res://sounds/soundfx/benjsounds/h/h2.wav")
+var dam3 = preload("res://sounds/soundfx/benjsounds/h/h3.wav")
+var dam4 = preload("res://sounds/soundfx/benjsounds/h/h4.wav")
+var dam5 = preload("res://sounds/soundfx/benjsounds/h/h5.wav")
+var dam6 = preload("res://sounds/soundfx/benjsounds/h/h6.wav")
+var deth1 = preload("res://sounds/soundfx/benjsounds/h/hd1.wav")
+var hattack = preload("res://sounds/soundfx/synthsounds/bossattack.wav")
+var swoosh = preload("res://sounds/soundfx/synthsounds/swoosh.wav")
+var humsounds = [an1, an2, an3, dam1, dam2, dam3, dam4, dam5, dam6]
 
 #mannequin sounds
 var mdam1 = preload("res://sounds/soundfx/benjsounds/m/md1.wav")
@@ -84,7 +91,10 @@ func _physics_process(delta):
 	var player_pos = get_node("/root/Main/Player").get_global_transform()
 	pos = player_pos.get_origin() as Vector2
 
-
+	if!(appeared):
+		pos_offset = spooky_offset
+	else:
+		pos_offset = attack_offset
 
 
 	#velocity = move_and_slide(velocity, Vector2.UP)
@@ -92,6 +102,7 @@ func _physics_process(delta):
 	var r
 	t = delta*speed
 	if(is_visible):
+		$Body.disabled = false
 		Fade_In()
 		if(is_dead):
 			pass
@@ -110,10 +121,13 @@ func _physics_process(delta):
 
 			r = get_move_r(t)
 			move_var = r
-
-		if len($Hurtbox.get_overlapping_bodies()) > 0:
-			HealthController.player_hit()
+		var bodies = $Hurtbox.get_overlapping_bodies()
+		if len(bodies) > 0:
+			for body in bodies:
+				if body.is_in_group("player"):
+					HealthController.player_hit()
 	else:
+		$Body.disabled = true
 		if(!is_spooky):
 			Fade_Out()
 		else:
@@ -127,8 +141,12 @@ func _physics_process(delta):
 func do_attack():
 	attacktimer.start()
 	is_attacking = true
+	gameaudioplayer.stream = swoosh
+	gameaudioplayer.play()
 
 func AttackTime():
+	gameaudioplayer.stream = hattack
+	gameaudioplayer.play()
 	delaytimer.start()
 	state_machine.travel("Attack")
 
@@ -188,36 +206,37 @@ func SpookyTimeOver():
 func EndAttack():
 	is_attacking = false
 	pos_offset.x = pos_offset.x * -1 #have the enemy choose the other side after an attack
-	pos_offset.x = pos_offset.x * rng.randf_range(0.9, 1.2) #add a little randomness to enemy spacing
-	pos_offset.y = pos_offset.y * rng.randf_range(0.7, 1.2)
+	pos_offset.x = pos_offset.x * rng.randf_range(0.9, 1.3) #add a little randomness to enemy spacing
+	pos_offset.y = pos_offset.y * rng.randf_range(0.7, 1.3)
 	state_machine.travel("idle")
 	beginattack.start()
 
 func manne_destroyed():
 	
-	var rand = rng.randf_range(0.5,1.5)
-	audioplayer.pitch_scale = rand
+	var rand = rng.randf_range(0.7,1.3)
+	manaudioplayer.pitch_scale = rand
 	rand = rng.randi_range(0,12)
-	audioplayer.stream = mansounds[rand]
-	audioplayer.play()
+	manaudioplayer.stream = mansounds[rand]
+	manaudioplayer.play()
 	childrendestroyed += 1;
 	print(childrendestroyed)
 	if(childrendestroyed > threshold):
 		is_visible = true
+		healthcontroller.boss_appeared()
 		if(!appeared):
 			rand = rng.randi_range(0,2)
-			audioplayer.stream = humsounds[rand]
-			audioplayer.pitch_scale = 1
-			audioplayer.play()
+			humaudioplayer.stream = humsounds[rand]
+			humaudioplayer.pitch_scale = 1
+			humaudioplayer.play()
 			beginattack.start()
 			appeared = true
 
 func do_damage():
 	var rand = rng.randf_range(0.8,1.2)
-	audioplayer.pitch_scale = rand
-	rand = rng.randi_range(2,4)
-	audioplayer.stream = humsounds[rand]
-	audioplayer.play()
+	humaudioplayer.pitch_scale = rand
+	rand = rng.randi_range(3,8)
+	humaudioplayer.stream = humsounds[rand]
+	humaudioplayer.play()
 	anim.play("Damage")
 	
 func do_death():

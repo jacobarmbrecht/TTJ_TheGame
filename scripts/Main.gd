@@ -1,10 +1,12 @@
 extends Node2D
 
-onready var audioplayer = $AudioStreamPlayer
+onready var audioplayer = $MusicAudio
+onready var humaudioplayer = $HumAudio
 var s_mon = preload("res://sounds/songs/TTJVG_MONDAY.wav")
 var s_buf = preload("res://sounds/songs/TTJVG_BUFFALO.wav")
 var endsong = preload("res://sounds/endgame/ttvg_ah.wav")
-var deth = preload("res://sounds/soundfx/benjsounds/h/hdd1.wav")
+var deth = preload("res://sounds/soundfx/benjsounds/h/hd1.wav")
+var  keysound = preload("res://sounds/soundfx/synthsounds/key.wav")
 #var oof = preload("res://sounds/soundfx/explosion(3).wav")
 var song = [s_mon, s_buf]
 
@@ -25,16 +27,18 @@ signal restart
 export(PackedScene) var mob_scene
 var boss_died = false
 var player_died = false
+var boss_appeared = false
 var score
 var rng = RandomNumberGenerator.new()
 
 func _ready():
+	audioplayer.stream = keysound
+	audioplayer.play()
 	rng.randomize()
 	$MobTimer.start()
 	score = 0
 	HealthController.connect("death", self, "player_dead")
 	HealthController.connect("boss_death", self, "boss_died")
-	#endzone.connect("body_shape_entered", self, "game_over")
 	get_node("Player/Body/Sprite/Attacks/Guitar").connect("destroyed", get_node("Humuncules"), "manne_destroyed")
 	
 	camera.limit_right = 1300
@@ -43,6 +47,11 @@ func _ready():
 	retrybutton.hide()
 
 func _process(delta):
+	if healthcontroller.boss_appeared and !boss_appeared:
+		$CanvasLayer/Menu.I_AM_THE_GODFLY()
+		boss_appeared = true
+	elif !boss_appeared:
+		$CanvasLayer/Menu.restart()
 	if!audioplayer.is_playing() and !boss_died:
 		var rand = rng.randi_range(0,song.size()-1)
 		audioplayer.stream = song[rand]
@@ -56,8 +65,10 @@ func game_over():
 	$ButtonTimer.start()
 	
 func new_game():
-	score = 0
-	#$Player.start($StartPosition.position)
+	$CanvasLayer/Menu.restart()
+	player_died = false
+	boss_died = false
+	
 
 
 
@@ -74,14 +85,15 @@ func _on_MobTimer_timeout():
 
 func boss_died():
 	boss_died = true
+	$CanvasLayer/Menu.I_AM_NO_LONGER_THE_GODFLY()
 	$MobTimer.stop()
 	var index = 0
 	#still needs implemented
 	tilemap.queue_free()
 	camera.limit_right = 10000000
 	audioplayer.stop()
-	audioplayer.stream = deth
-	audioplayer.play()
+	humaudioplayer.stream = deth
+	humaudioplayer.play()
 	#game_over()
 
 func dead_mob():
@@ -94,7 +106,7 @@ func player_dead():
 		player_died = true
 		print("dead!")
 		retrybutton.transform = playervar.transform
-		$ButtonTimer.start()
+		$ButtonTimer2.start()
 
 
 
@@ -111,12 +123,16 @@ func _on_ButtonTimer_timeout():
 
 func _on_MenuTextButton_button_up():
 	healthcontroller.restart_game()
+	$CanvasLayer/Menu.restart()
+	player_died = false
+	boss_died = false
 	get_tree().change_scene_to(title_scene)
 
 
 
 func _on_RetryTextButton_button_up():
 	healthcontroller.restart_game()
+	$CanvasLayer/Menu.restart()
 	player_died = false
 	boss_died = false
 	get_tree().change_scene_to(main_scene)
@@ -124,6 +140,7 @@ func _on_RetryTextButton_button_up():
 
 func _on_NewTextButton_button_up():
 	healthcontroller.restart_game()
+	$CanvasLayer/Menu.restart()
 	player_died = false
 	boss_died = false
 	get_tree().change_scene_to(main_scene)
@@ -132,7 +149,9 @@ func _on_NewTextButton_button_up():
 func _on_Player_special_attack():
 	var badguys = get_tree().get_nodes_in_group("baddies")
 	var num_badguys = badguys.size()
-	for N in num_badguys:
-		dead_mob()
-		boss.manne_destroyed()
-	get_tree().call_group("baddies", "uhoh")
+	if num_badguys > 0:
+		for N in num_badguys:
+			dead_mob()
+			if !boss_died:
+				boss.manne_destroyed()
+		get_tree().call_group("baddies", "uhoh")

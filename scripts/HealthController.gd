@@ -5,7 +5,7 @@ const PLAYER_SPECIAL_MAX = 10
 signal death
 signal player_dam
 
-const BOSS_HEALTH_MAX = 10
+const BOSS_HEALTH_MAX = 30
 signal boss_death
 signal boss_dam
 
@@ -15,6 +15,8 @@ onready var player_special = 0
 onready var first_hit = true
 
 onready var boss_health = BOSS_HEALTH_MAX
+
+var boss_appeared = false
 
 func _ready():
 	boss_health = BOSS_HEALTH_MAX
@@ -41,6 +43,7 @@ func pickup():
 		player_special -= 1
 		
 	print(player_special)
+
 func player_hit():
 	if player_health > 0:
 		player_health -= 1
@@ -65,10 +68,15 @@ func restart_game():
 	player_health = PLAYER_HEALTH_MAX
 	player_special = -1
 	first_hit = true
+	boss_appeared = false
+	
 
 func refresh_pickup():
-	print("pickups refreshed")
+	#print("pickups refreshed")
 	player_special += PLAYER_SPECIAL_MAX
 	pickup()
 	first_hit = true
-	print(player_special)
+	#print(player_special)
+	
+func boss_appeared():
+	boss_appeared = true

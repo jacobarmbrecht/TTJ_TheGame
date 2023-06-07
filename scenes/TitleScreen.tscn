@@ -35,5 +35,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
 [connection signal="button_up" from="NewGame/NewTextButton" to="." method="_on_NewTextButton_button_up"]
 [connection signal="button_up" from="Options/OptTextButton" to="." method="_on_OptTextButton_button_up"]

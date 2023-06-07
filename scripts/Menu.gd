@@ -8,6 +8,8 @@ func _ready():
 	$Control/Healthbar.material.set_shader_param("MASK", health_mask)
 	$Control2/BossHealthbar.material.set_shader_param("MASK", boss_health_mask)
 	$Control3/Specialbar.material.set_shader_param("MASK", player_special_mask)
+	$Control2/BossHealthbar.visible = false
+	$Control2/Label.visible = false
 
 func _process(_delta):
 	# Player health
@@ -28,3 +30,13 @@ func _process(_delta):
 	grad = player_special_mask.get_gradient()
 	grad.set_offset(0, pos)
 	grad.set_offset(1, pos2)
+
+func I_AM_THE_GODFLY():
+	$Control2/BossHealthbar.visible = true
+	$Control2/Label.visible = true
+func I_AM_NO_LONGER_THE_GODFLY():
+	$Control2/Label.visible = false
+	
+func restart():
+	$Control2/BossHealthbar.visible = false
+	$Control2/Label.visible = false

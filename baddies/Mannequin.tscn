@@ -2,7 +2,7 @@
 
 [ext_resource path="res://art/sprites/enemies/mannequins/manne_basic.png" type="Texture" id=1]
 [ext_resource path="res://baddies/Mannequin.gd" type="Script" id=2]
-[ext_resource path="res://sounds/soundfx/mannedead.wav" type="AudioStream" id=3]
+[ext_resource path="res://sounds/soundfx/explosion(1).wav" type="AudioStream" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 11.0

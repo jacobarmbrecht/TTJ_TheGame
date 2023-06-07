@@ -66,7 +66,7 @@ margin_top = 160.0
 margin_right = 984.0
 margin_bottom = 248.0
 custom_colors/default_color = Color( 0.921569, 0.976471, 0, 1 )
-text = "WASD: Move
+text = "A / D: Left / Right
 Space: Jump
 Mouse Left Click: Attack
 Mouse Right Click: Special Attack"
@@ -80,12 +80,14 @@ margin_top = 72.0
 margin_right = 984.0
 margin_bottom = 160.0
 custom_colors/default_color = Color( 0.945098, 1, 0, 1 )
-text = "          YOU'RE LATE
-ESCAPE THE MANNEQUINS
+text = "           YOU'RE LATE
+    ESCAPE THE MENACE
      GET TO THE SHOW!"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="pressed" from="NewGame/NewTextButton" to="." method="_on_NewTextButton_pressed"]
 [connection signal="pressed" from="OptionsButton/OptTextButton" to="." method="_on_OptTextButton_pressed"]

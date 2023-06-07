@@ -5,19 +5,22 @@ onready var attacks = $Body/Sprite/Attacks
 onready var state_machine = $AnimationPlayer/AnimationTree.get("parameters/playback")
 onready var anim = $AnimationPlayer
 onready var audioplayer = $AudioStreamPlayer
+onready var gameaudio = $GameAudio
 
-var fxpowerup = preload("res://sounds/soundfx/powerUp.wav")
+var fxpowerup = preload("res://sounds/soundfx/synthsounds/powerup.wav")
+var jump = preload("res://sounds/soundfx/synthsounds/jump.wav")
+var specialattack = preload("res://sounds/soundfx/synthsounds/specialattack.wav")
 
-var dam1 = preload("res://sounds/soundfx/benjsounds/p/pd1.wav")
-var dam2 = preload("res://sounds/soundfx/benjsounds/p/pd2.wav")
-var dam3 = preload("res://sounds/soundfx/benjsounds/p/pd3.wav")
-var dam4 = preload("res://sounds/soundfx/benjsounds/p/pd4.wav")
-var dam5 = preload("res://sounds/soundfx/benjsounds/p/pd5.wav")
-var dam6 = preload("res://sounds/soundfx/benjsounds/p/pd6.wav")
-var dam7 = preload("res://sounds/soundfx/benjsounds/p/pd7.wav")
-var dam8 = preload("res://sounds/soundfx/benjsounds/p/pd8.wav")
-var ded1 = preload("res://sounds/soundfx/benjsounds/p/pdd1.wav")
-var ded2 = preload("res://sounds/soundfx/benjsounds/p/pdd2.wav")
+var dam1 = preload("res://sounds/soundfx/benjsounds/p/p1.wav")
+var dam2 = preload("res://sounds/soundfx/benjsounds/p/p2.wav")
+var dam3 = preload("res://sounds/soundfx/benjsounds/p/p3.wav")
+var dam4 = preload("res://sounds/soundfx/benjsounds/p/p4.wav")
+var dam5 = preload("res://sounds/soundfx/benjsounds/p/p5.wav")
+var dam6 = preload("res://sounds/soundfx/benjsounds/p/p6.wav")
+var dam7 = preload("res://sounds/soundfx/benjsounds/p/p7.wav")
+var dam8 = preload("res://sounds/soundfx/benjsounds/p/p8.wav")
+var ded1 = preload("res://sounds/soundfx/benjsounds/p/pd1.wav")
+var ded2 = preload("res://sounds/soundfx/benjsounds/p/pd2.wav")
 
 var damaged = [dam1, dam2, dam3, dam4, dam5, dam6, dam7, dam8]
 var ded = [ded1, ded2]
@@ -36,6 +39,7 @@ export var max_walk_speed : float = 5.0
 var velocity = Vector2.ZERO  ## The player's movement vector.
 
 var is_attacking = false
+var special = false
 var is_jumping = false
 var attack_rate_done = true
 var can_special = false
@@ -55,7 +59,7 @@ func _ready():
 	pickups = 0
 
 func _physics_process(delta):
-
+	
 	if is_on_floor():
 		is_jumping = false
 
@@ -66,7 +70,8 @@ func _physics_process(delta):
 
 
 	## "disable" inputs when the player is attacking
-	if !is_attacking and !is_dead and !boss_dead:
+	if !special and !is_attacking and !is_dead and !boss_dead:
+
 		if abs(velocity.x) < min_speed:
 			velocity.x = 0.0
 
@@ -87,9 +92,12 @@ func _physics_process(delta):
 
 		## Jump
 		if Input.is_action_pressed("jump") and is_on_floor():
+			audioplayer.stream = jump
+			audioplayer.play()
 			velocity.y -= jumpForce
 			do_jump()
 			is_jumping = true
+
 
 		## Attack buttons are and if elif case
 		if Input.is_action_pressed("attack"):
@@ -102,6 +110,8 @@ func _physics_process(delta):
 			if can_special:
 				velocity.x = 0
 				special_pressed = true
+				gameaudio.stream = specialattack
+				gameaudio.play()
 		elif Input.is_action_pressed("taunt"):
 			velocity.x = 0
 			taunt_pressed = true
@@ -114,6 +124,7 @@ func _physics_process(delta):
 
 
 
+		
 		if attack_pressed and attack_rate_done:
 			do_attack()
 			is_attacking = true
@@ -123,9 +134,10 @@ func _physics_process(delta):
 		elif special_pressed and attack_rate_done:
 			do_special()
 			is_attacking = true
+			special = true
 			$SpecialTimer.start()
-			attack_rate_done = false
 			$AttackRate.start()
+			#$AttackTimer.start()
 			can_special = false
 			pickups = 0
 			emit_signal("special_attack")
@@ -136,7 +148,7 @@ func _physics_process(delta):
 			attack_rate_done = false
 			$AttackRate.start()
 	else: 
-		if is_dead:
+		if is_dead or special:
 			velocity = velocity / 1.2 #fake friction
 		if boss_dead:
 			velocity = velocity / 1.1 #fake friction
@@ -202,10 +214,15 @@ func _on_Main_onstage():
 
 
 func _on_Pickup_picked_up():
-	audioplayer.stream = fxpowerup
-	audioplayer.play()
+	gameaudio.stream = fxpowerup
+	gameaudio.play()
 	print("player picked up")
 	pickups += 1
 	if pickups > 9:
 		can_special = true
 
+
+
+func end_special_attack():
+	is_attacking = false
+	special = false

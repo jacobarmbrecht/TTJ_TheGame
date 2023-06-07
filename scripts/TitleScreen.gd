@@ -3,10 +3,14 @@ extends Node2D
 onready var main_scene = load("res://scenes//Main.tscn")
 onready var title_scene = load("res://scenes//TitleScreen.tscn")
 onready var options_scene = load("res://scenes//Options.tscn")
+onready var audioplayer = $AudioStreamPlayer
+
+var  keysound = preload("res://sounds/soundfx/synthsounds/key.wav")
 
 
 func _ready():
-	pass # Replace with function body.
+	audioplayer.stream = keysound
+	audioplayer.play()
 
 
 
@@ -25,4 +29,6 @@ func _on_NewTextButton_button_up():
 
 func _on_OptTextButton_button_up():
 	get_tree().change_scene_to(options_scene)
+
+
 
