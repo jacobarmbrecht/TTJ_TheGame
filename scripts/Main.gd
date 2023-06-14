@@ -9,6 +9,7 @@ var deth = preload("res://sounds/soundfx/benjsounds/h/hd1.wav")
 var  keysound = preload("res://sounds/soundfx/synthsounds/key.wav")
 #var oof = preload("res://sounds/soundfx/explosion(3).wav")
 var song = [s_mon, s_buf]
+var toasty = preload("res://scenes/Toasty.tscn")
 
 onready var tilemap = $HiddenDoor
 onready var camera = $Player/Camera2D
@@ -39,6 +40,8 @@ func _ready():
 	score = 0
 	HealthController.connect("death", self, "player_dead")
 	HealthController.connect("boss_death", self, "boss_died")
+	KillstreakController.connect("toast_time", self, "on_toast_time")
+	#endzone.connect("body_shape_entered", self, "game_over")
 	get_node("Player/Body/Sprite/Attacks/Guitar").connect("destroyed", get_node("Humuncules"), "manne_destroyed")
 	
 	camera.limit_right = 1300
@@ -108,7 +111,8 @@ func player_dead():
 		retrybutton.transform = playervar.transform
 		$ButtonTimer2.start()
 
-
+func on_toast_time():
+	$CanvasLayer.add_child(toasty.instance())
 
 
 func _on_Area2D_body_entered(body):

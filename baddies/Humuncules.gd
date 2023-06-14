@@ -219,6 +219,7 @@ func manne_destroyed():
 	manaudioplayer.stream = mansounds[rand]
 	manaudioplayer.play()
 	childrendestroyed += 1;
+	KillstreakController.kill()
 	print(childrendestroyed)
 	if(childrendestroyed > threshold):
 		is_visible = true
